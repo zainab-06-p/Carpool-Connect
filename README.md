@@ -1,4 +1,4 @@
-# Carpooling-dapp
+# Carpool Connect
 <b><h1 align="center">A decentralized carpooling application based on Blockchain.</b>
 </h1>
 <details>
@@ -11,7 +11,7 @@
 - [Applications](#applications)
 - [Project Setup](#project-setup)
 - [Usage](#usage)
-- [Team Members](#team-members)
+
 
 
 </details>
@@ -207,9 +207,5 @@ Navigate back to the root directory, and then execute the frontend by running th
 Execute the backend by running the command:
 ### `nodemon index.js`
 
-## 👨‍💻Team Members
 
-- [Zainab Pirjade - ](https://github.com/zainab-06-p/Carpooling-dapp) 
-- Anushka Darunkar 
-- Shreyas Manore
 

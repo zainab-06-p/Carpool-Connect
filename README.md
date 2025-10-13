@@ -27,7 +27,7 @@ This project therefore aims to move ride-sharing and car hire are to blockchain 
 4. **Data Privacy**: User data is protected by the immutable and secure nature of blockchain technology, ensuring privacy and security.
 ## 🔗Links
 
-- [GitHub Repository](https://github.com/zainab-06-p/Carpooling-dapp)
+
 
 
 

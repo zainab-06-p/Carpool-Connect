@@ -3,7 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import '../stylesheets/UserDashboard.css';
 import Web3 from 'web3';
 import CommuteIOABI from "../ABI/contracttestingABI.json";
-import { FaUser, FaCar, FaHistory, FaEnvelope, FaCarSide, FaExclamationTriangle } from 'react-icons/fa';
+import { FaUser, FaCar, FaHistory, FaEnvelope, FaMapMarkerAlt, FaUsers, FaDollarSign, FaClock, FaCalendarAlt } from 'react-icons/fa';
 import { RiCaravanFill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 
@@ -143,9 +143,10 @@ function CurrentRide() {
     }
   };
 
-  const currentRides = rides.filter(ride => 
-    (ride.HostID === passengerID || ride.PeersID.includes(passengerID)) && !ride.isRideEnded
-  );
+  const handleTesting = () => {
+    const rideid = 2;
+    console.log(typeof(rides[rideid-1].isRideStarted), rides[rideid-1].isRideStarted);
+  };
 
   return (
     <div style={{
@@ -153,7 +154,7 @@ function CurrentRide() {
       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
       padding: '20px'
     }}>
-      {!isLoading && ( 
+      {!isLoading && (
         <div style={{
           display: 'flex',
           flexDirection: 'column',
@@ -193,10 +194,10 @@ function CurrentRide() {
               }}>
                 {[
                   { to: `/dashboard/${passengerID}`, icon: <FaUser />, text: 'Profile' },
-                  { to: `/myinprogressrides/${passengerID}`, icon: <FaCar />, text: 'Current Rides' },
+                  { to: `/myinprogressrides/${passengerID}`, icon: <FaCar />, text: 'Current Ride' },
                   { to: `/ridehistory/${passengerID}`, icon: <FaHistory />, text: 'History' },
                   { to: `/enterRideInbox/${passengerID}`, icon: <FaEnvelope />, text: 'Inbox' },
-                  { to: `/viewallrides/${passengerID}`, icon: <FaCarSide />, text: 'Check Ride' },
+                  { to: `/viewallrides/${passengerID}`, icon: <FaCar />, text: 'Check Rides' },
                   { to: `/startaride/${passengerID}`, icon: <RiCaravanFill />, text: 'Start Ride' }
                 ].map((item, index) => (
                   <Link
@@ -206,23 +207,23 @@ function CurrentRide() {
                       display: 'flex',
                       alignItems: 'center',
                       gap: '6px',
-                      color: item.text === 'Current Rides' ? '#667eea' : '#4a5568',
+                      color: item.text === 'Current Ride' ? '#667eea' : '#4a5568',
                       textDecoration: 'none',
                       fontWeight: '600',
                       fontSize: '0.85rem',
                       padding: '8px 12px',
                       borderRadius: '8px',
                       transition: 'all 0.3s ease',
-                      background: item.text === 'Current Rides' ? 'rgba(102, 126, 234, 0.1)' : 'transparent'
+                      background: item.text === 'Current Ride' ? 'rgba(102, 126, 234, 0.1)' : 'transparent'
                     }}
                     onMouseEnter={(e) => {
-                      if (item.text !== 'Current Rides') {
+                      if (item.text !== 'Current Ride') {
                         e.target.style.background = 'rgba(102, 126, 234, 0.1)';
                         e.target.style.color = '#667eea';
                       }
                     }}
                     onMouseLeave={(e) => {
-                      if (item.text !== 'Current Rides') {
+                      if (item.text !== 'Current Ride') {
                         e.target.style.background = 'transparent';
                         e.target.style.color = '#4a5568';
                       }
@@ -248,27 +249,45 @@ function CurrentRide() {
           }}>
             {/* Header Section */}
             <div style={{
-              background: 'linear-gradient(45deg, #667eea, #764ba2)',
-              color: 'white',
-              padding: '25px',
-              borderRadius: '15px',
-              textAlign: 'center',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '15px',
               marginBottom: '30px'
             }}>
-              <h2 style={{
-                fontSize: '2rem',
-                fontWeight: '700',
-                margin: '0 0 10px 0'
+              <div style={{
+                width: '60px',
+                height: '60px',
+                background: 'linear-gradient(45deg, #667eea, #764ba2)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1.5rem',
+                color: 'white'
               }}>
-                🚗 My Active Rides
-              </h2>
-              <p style={{
-                fontSize: '1.1rem',
-                margin: 0,
-                opacity: 0.9
-              }}>
-                Manage your ongoing carpool journeys
-              </p>
+                🚗
+              </div>
+              <div>
+                <h2 style={{
+                  color: '#2d3748',
+                  fontSize: '1.8rem',
+                  fontWeight: '700',
+                  margin: '0 0 5px 0'
+                }}>
+                  My Current Rides
+                </h2>
+                <div style={{
+                  background: 'linear-gradient(45deg, #667eea, #764ba2)',
+                  color: 'white',
+                  padding: '6px 12px',
+                  borderRadius: '20px',
+                  fontSize: '0.9rem',
+                  fontWeight: '600',
+                  display: 'inline-block'
+                }}>
+                  Active & Upcoming
+                </div>
+              </div>
             </div>
 
             {/* Rides List */}
@@ -280,41 +299,40 @@ function CurrentRide() {
               overflowY: 'auto',
               paddingRight: '10px'
             }}>
-              {currentRides.length > 0 ? (
-                currentRides.map((ride) => (
-                  <div 
-                    key={ride.RideID}
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.8)',
-                      backdropFilter: 'blur(5px)',
-                      borderRadius: '15px',
-                      padding: '25px',
-                      border: '2px solid rgba(102, 126, 234, 0.1)',
-                      transition: 'all 0.3s ease',
-                      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-5px)';
-                      e.currentTarget.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.15)';
-                      e.currentTarget.style.borderColor = 'rgba(102, 126, 234, 0.3)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-                      e.currentTarget.style.borderColor = 'rgba(102, 126, 234, 0.1)';
-                    }}
+              {rides.length > 0 ? rides.map((ride) => (
+                ((ride.HostID === passengerID || ride.PeersID.includes(passengerID)) && !(ride.isRideEnded)) && (
+                  <div key={ride.RideID} style={{
+                    background: '#f7fafc',
+                    borderRadius: '15px',
+                    padding: '25px',
+                    border: '2px solid #e2e8f0',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(102, 126, 234, 0.05)';
+                    e.currentTarget.style.borderColor = 'rgba(102, 126, 234, 0.3)';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.1)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = '#f7fafc';
+                    e.currentTarget.style.borderColor = '#e2e8f0';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.05)';
+                  }}
                   >
                     <div style={{
                       display: 'grid',
-                      gridTemplateColumns: '1fr auto',
+                      gridTemplateColumns: '1fr auto auto',
                       gap: '20px',
-                      alignItems: 'start'
+                      alignItems: 'center'
                     }}>
                       {/* Ride Information */}
                       <div style={{
                         display: 'flex',
                         flexDirection: 'column',
-                        gap: '15px'
+                        gap: '12px'
                       }}>
                         <div style={{
                           display: 'flex',
@@ -325,65 +343,55 @@ function CurrentRide() {
                           <div style={{
                             background: 'linear-gradient(45deg, #667eea, #764ba2)',
                             color: 'white',
-                            padding: '8px 16px',
-                            borderRadius: '20px',
-                            fontSize: '0.9rem',
-                            fontWeight: '700'
+                            padding: '4px 12px',
+                            borderRadius: '12px',
+                            fontSize: '0.8rem',
+                            fontWeight: '600'
                           }}>
-                            Ride #{ride.RideID}
+                            Ride ID: {ride.RideID}
                           </div>
                           <div style={{
-                            background: ride.HostID === passengerID ? '#e53e3e' : '#48bb78',
+                            background: ride.HostID === passengerID ? '#ed8936' : '#48bb78',
                             color: 'white',
-                            padding: '8px 16px',
-                            borderRadius: '20px',
-                            fontSize: '0.9rem',
+                            padding: '4px 12px',
+                            borderRadius: '12px',
+                            fontSize: '0.8rem',
                             fontWeight: '600'
                           }}>
                             {ride.HostID === passengerID ? 'Host' : 'Passenger'}
                           </div>
                           <div style={{
-                            background: ride.isRideStarted ? '#f6ad55' : '#38a169',
+                            background: ride.isRideStarted ? '#48bb78' : '#e53e3e',
                             color: 'white',
-                            padding: '8px 16px',
-                            borderRadius: '20px',
-                            fontSize: '0.9rem',
+                            padding: '4px 12px',
+                            borderRadius: '12px',
+                            fontSize: '0.8rem',
                             fontWeight: '600'
                           }}>
-                            {ride.isRideStarted ? 'In Progress' : 'Scheduled'}
+                            {ride.isRideStarted ? 'Started' : 'Not Started'}
                           </div>
                         </div>
 
                         <div style={{
-                          display: 'grid',
-                          gap: '10px'
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '12px',
+                          color: '#4a5568'
                         }}>
-                          <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '10px',
-                            color: '#4a5568'
-                          }}>
-                            <span style={{ fontWeight: '600' }}>From:</span>
-                            <span>{ride.RideSourceLocation}</span>
+                          <FaMapMarkerAlt style={{ color: '#48bb78' }} />
+                          <div style={{ fontSize: '0.9rem', fontWeight: '500' }}>
+                            <strong>From:</strong> {ride.RideSourceLocation}
                           </div>
-                          <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '10px',
-                            color: '#4a5568'
-                          }}>
-                            <span style={{ fontWeight: '600' }}>To:</span>
-                            <span>{ride.RideDestinationLocation}</span>
-                          </div>
-                          <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '10px',
-                            color: '#4a5568'
-                          }}>
-                            <span style={{ fontWeight: '600' }}>Schedule:</span>
-                            <span>{ride.RideDateandTime}</span>
+                        </div>
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '12px',
+                          color: '#4a5568'
+                        }}>
+                          <FaMapMarkerAlt style={{ color: '#e53e3e' }} />
+                          <div style={{ fontSize: '0.9rem', fontWeight: '500' }}>
+                            <strong>To:</strong> {ride.RideDestinationLocation}
                           </div>
                         </div>
                       </div>
@@ -403,10 +411,11 @@ function CurrentRide() {
                             border: 'none',
                             padding: '12px 20px',
                             borderRadius: '10px',
-                            fontSize: '14px',
+                            fontSize: '0.9rem',
                             fontWeight: '600',
                             cursor: 'pointer',
-                            transition: 'all 0.3s ease'
+                            transition: 'all 0.3s ease',
+                            boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)'
                           }}
                           onMouseEnter={(e) => {
                             e.target.style.transform = 'translateY(-2px)';
@@ -414,120 +423,66 @@ function CurrentRide() {
                           }}
                           onMouseLeave={(e) => {
                             e.target.style.transform = 'translateY(0)';
-                            e.target.style.boxShadow = 'none';
+                            e.target.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.3)';
                           }}
                         >
                           View Ride Details
                         </button>
+
                         <button
                           onClick={() => handleCancelRide(ride.RideID, ride.HostID === passengerID ? "Host" : "Passenger")}
                           disabled={ride.isRideStarted}
                           style={{
-                            background: ride.isRideStarted 
-                              ? '#a0aec0' 
-                              : 'linear-gradient(45deg, #f56565, #e53e3e)',
+                            background: ride.isRideStarted ? 
+                              'linear-gradient(45deg, #cccccc, #999999)' : 
+                              'linear-gradient(45deg, #e53e3e, #c53030)',
                             color: 'white',
                             border: 'none',
                             padding: '12px 20px',
                             borderRadius: '10px',
-                            fontSize: '14px',
+                            fontSize: '0.9rem',
                             fontWeight: '600',
                             cursor: ride.isRideStarted ? 'not-allowed' : 'pointer',
                             transition: 'all 0.3s ease',
-                            opacity: ride.isRideStarted ? 0.6 : 1,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '8px'
+                            boxShadow: ride.isRideStarted ? 
+                              '0 4px 15px rgba(204, 204, 204, 0.3)' : 
+                              '0 4px 15px rgba(229, 62, 62, 0.3)',
+                            opacity: ride.isRideStarted ? 0.6 : 1
                           }}
                           onMouseEnter={(e) => {
                             if (!ride.isRideStarted) {
                               e.target.style.transform = 'translateY(-2px)';
-                              e.target.style.boxShadow = '0 6px 20px rgba(245, 101, 101, 0.4)';
+                              e.target.style.boxShadow = '0 6px 20px rgba(229, 62, 62, 0.4)';
                             }
                           }}
                           onMouseLeave={(e) => {
                             if (!ride.isRideStarted) {
                               e.target.style.transform = 'translateY(0)';
-                              e.target.style.boxShadow = 'none';
+                              e.target.style.boxShadow = '0 4px 15px rgba(229, 62, 62, 0.3)';
                             }
                           }}
                         >
-                          <FaExclamationTriangle />
-                          {ride.isRideStarted ? 'Cannot Cancel' : 'Cancel Ride'}
+                          Cancel Ride
                         </button>
-                        {ride.isRideStarted && (
-                          <div style={{
-                            color: '#e53e3e',
-                            fontSize: '0.8rem',
-                            fontWeight: '600',
-                            textAlign: 'center',
-                            marginTop: '5px'
-                          }}>
-                            Ride has already started
-                          </div>
-                        )}
                       </div>
                     </div>
                   </div>
-                ))
-              ) : (
+                )
+              )) : (
                 <div style={{
                   textAlign: 'center',
-                  padding: '60px 20px',
-                  color: '#718096'
+                  padding: '40px',
+                  color: '#718096',
+                  fontSize: '1.1rem'
                 }}>
-                  <div style={{
-                    fontSize: '4rem',
-                    marginBottom: '20px',
-                    opacity: '0.5'
-                  }}>
-                    🚗
-                  </div>
-                  <h4 style={{
-                    color: '#4a5568',
-                    marginBottom: '10px',
-                    fontWeight: '600'
-                  }}>
-                    No Active Rides
-                  </h4>
-                  <p style={{
-                    margin: 0,
-                    fontSize: '1rem'
-                  }}>
-                    You don't have any rides in progress. Check available rides to join one!
-                  </p>
-                  <Link
-                    to={`/viewallrides/${passengerID}`}
-                    style={{
-                      display: 'inline-block',
-                      marginTop: '20px',
-                      background: 'linear-gradient(45deg, #667eea, #764ba2)',
-                      color: 'white',
-                      padding: '12px 24px',
-                      borderRadius: '10px',
-                      textDecoration: 'none',
-                      fontWeight: '600',
-                      transition: 'all 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.transform = 'translateY(-2px)';
-                      e.target.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.4)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.transform = 'translateY(0)';
-                      e.target.style.boxShadow = 'none';
-                    }}
-                  >
-                    Find Rides
-                  </Link>
+                  No current rides found. Start a new ride or join an existing one!
                 </div>
               )}
             </div>
           </div>
         </div>
       )}
-      
+
       {/* Loading State */}
       {isLoading && (
         <div style={{

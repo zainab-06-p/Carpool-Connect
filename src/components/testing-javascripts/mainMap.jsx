@@ -20,7 +20,7 @@ function MainMap() {
       
         <div className="App">
         <StartARide />
-        <MapContainer center={position} zoom={13} scrollWheelZoom={true} style={{width:"57.5vw",height:"78vh",marginLeft:"41.5vw",marginTop:"-79.5vh"}}>
+        <MapContainer center={position} zoom={13} scrollWheelZoom={true} style={{width:"44.5vw",height:"72vh",marginLeft:"52.5vw",marginTop:"-79vh"}}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://api.maptiler.com/maps/openstreetmap/{z}/{x}/{y}@2x.jpg?key=OnXJPBh7IkMHefqgKgQS"

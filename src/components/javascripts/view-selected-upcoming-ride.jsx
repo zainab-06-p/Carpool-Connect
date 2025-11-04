@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import '../stylesheets/UserDashboard.css';
 import Web3 from 'web3';
 import CommuteIOABI from "../ABI/contracttestingABI.json";
-import { FaUser, FaCar, FaHistory, FaEnvelope, FaMapMarkerAlt, FaUsers, FaClock, FaCarSide } from 'react-icons/fa';
+import { FaUser, FaCar, FaHistory, FaEnvelope, FaMapMarkerAlt, FaUsers, FaDollarSign, FaClock, FaCalendarAlt } from 'react-icons/fa';
 import { RiCaravanFill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 
@@ -83,6 +83,7 @@ function CurrentRide() {
 
           setRides(ridesList);
           setIsLoading(false);
+          console.log(passengers);
 
           const requestDetails = await contract.methods.GetPassRequestDetails(parseInt(passengerID)).call();
           setUserDetails(requestDetails);
@@ -148,7 +149,7 @@ function CurrentRide() {
                   { to: `/myinprogressrides/${passengerID}`, icon: <FaCar />, text: 'Current Ride' },
                   { to: `/ridehistory/${passengerID}`, icon: <FaHistory />, text: 'History' },
                   { to: `/enterRideInbox/${passengerID}`, icon: <FaEnvelope />, text: 'Inbox' },
-                  { to: `/viewallrides/${passengerID}`, icon: <FaCarSide />, text: 'Check Rides' },
+                  { to: `/viewallrides/${passengerID}`, icon: <FaCar />, text: 'Check Rides' },
                   { to: `/startaride/${passengerID}`, icon: <RiCaravanFill />, text: 'Start Ride' }
                 ].map((item, index) => (
                   <Link
@@ -236,7 +237,7 @@ function CurrentRide() {
                       fontWeight: '700',
                       margin: '0 0 5px 0'
                     }}>
-                      {passengers[passengerID-1]?.PassName?.split(" ")[0]}'s Active Ride
+                      {passengers[passengerID-1]?.PassName?.split(" ")[0]}'s Ride
                     </h2>
                     <div style={{
                       background: 'linear-gradient(45deg, #667eea, #764ba2)',
@@ -441,21 +442,44 @@ function CurrentRide() {
                   padding: '20px',
                   borderRadius: '12px',
                   border: '2px solid #e2e8f0',
-                  textAlign: 'center'
+                  maxHeight: '200px',
+                  overflowY: 'auto'
                 }}>
-                  <div style={{
-                    color: '#718096',
-                    fontSize: '1rem',
-                    marginBottom: '10px'
-                  }}>
-                    No recent updates
-                  </div>
-                  <div style={{
-                    color: '#a0aec0',
-                    fontSize: '0.9rem'
-                  }}>
-                    Ride updates will appear here
-                  </div>
+                  {rides[rideID-1]?.RideUpdates?.length > 0 ? (
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '10px'
+                    }}>
+                      {rides[rideID-1]?.RideUpdates?.map((update, index) => (
+                        <div key={index} style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '10px',
+                          padding: '10px',
+                          background: 'white',
+                          borderRadius: '8px',
+                          border: '1px solid #e2e8f0'
+                        }}>
+                          <div style={{
+                            width: '8px',
+                            height: '8px',
+                            background: '#667eea',
+                            borderRadius: '50%'
+                          }}></div>
+                          <span style={{ color: '#4a5568', fontSize: '0.9rem' }}>{update}</span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div style={{
+                      color: '#718096',
+                      textAlign: 'center',
+                      padding: '20px'
+                    }}>
+                      No recent updates available
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -493,7 +517,10 @@ function CurrentRide() {
                     borderRadius: '10px',
                     border: '2px solid #e2e8f0'
                   }}>
-                    <span style={{ fontWeight: '600', color: '#4a5568' }}>Start Date & Time:</span>
+                    <span style={{ fontWeight: '600', color: '#4a5568', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <FaCalendarAlt style={{ color: '#667eea' }} />
+                      Date & Time:
+                    </span>
                     <span style={{ color: '#2d3748', fontWeight: '500' }}>
                       {rides[rideID-1]?.RideDateandTime}
                     </span>
@@ -507,19 +534,12 @@ function CurrentRide() {
                     borderRadius: '10px',
                     border: '2px solid #e2e8f0'
                   }}>
-                    <span style={{ fontWeight: '600', color: '#4a5568' }}>Ride Status:</span>
-                    <span style={{
-                      color: rides[rideID-1]?.isRideStarted && !rides[rideID-1]?.isRideEnded ? '#d69e2e' :
-                            !rides[rideID-1]?.isRideStarted ? '#38a169' : '#e53e3e',
-                      background: rides[rideID-1]?.isRideStarted && !rides[rideID-1]?.isRideEnded ? '#fffaf0' :
-                                !rides[rideID-1]?.isRideStarted ? '#f0fff4' : '#fff5f5',
-                      padding: '6px 12px',
-                      borderRadius: '15px',
-                      fontSize: '0.8rem',
-                      fontWeight: '600'
-                    }}>
-                      {rides[rideID-1]?.isRideStarted && !rides[rideID-1]?.isRideEnded ? "In Progress" :
-                       !rides[rideID-1]?.isRideStarted ? "Scheduled" : "Completed"}
+                    <span style={{ fontWeight: '600', color: '#4a5568', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <FaDollarSign style={{ color: '#667eea' }} />
+                      Fare:
+                    </span>
+                    <span style={{ color: '#2d3748', fontWeight: '500' }}>
+                      {rides[rideID-1]?.RideFare} ETH
                     </span>
                   </div>
                 </div>
@@ -622,7 +642,7 @@ function CurrentRide() {
                   e.target.style.boxShadow = '0 8px 25px rgba(72, 187, 120, 0.4)';
                 }}
               >
-                ✅ I Have Joined The Ride
+                ✅ I have Joined
               </button>
             </div>
           </div>

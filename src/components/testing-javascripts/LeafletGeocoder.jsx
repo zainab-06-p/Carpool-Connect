@@ -85,7 +85,7 @@ const LeafletGeocoder = () => {
 
   return (
     <div style={{ position: "relative", height: "100%" }}>
-      <div style={{ position: "absolute", bottom: "10px", left: "10px", zIndex: "1000" }}>
+      <div style={{ position: "absolute", bottom: "10px", left: "-150px", zIndex: "1000" }}>
         <button
           style={{ backgroundColor: "#116D6E", color: "white", padding: "1vh", borderRadius: "10px", marginLeft: "25vw", fontWeight:"700", fontSize:"large" }}
           onClick={() => {

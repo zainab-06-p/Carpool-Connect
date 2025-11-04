@@ -7,9 +7,10 @@ import '../stylesheets/UserDashboard.css';
 import Web3 from 'web3';
 import Dropdown from 'react-bootstrap/Dropdown';
 import CommuteIOABI from "../ABI/contracttestingABI.json";
-import { FaUser, FaCar, FaHistory, FaEnvelope, FaSearch, FaMapMarkerAlt, FaCarSide, FaWallet } from 'react-icons/fa';
+import { FaUser, FaCar, FaHistory, FaEnvelope, FaMapMarkerAlt, FaSearch, FaDollarSign, FaUsers, FaCalendarAlt, FaClock } from 'react-icons/fa';
 import { RiCaravanFill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
+
 const contractAddress = '0x7B4c81ea9461f5A016359ACE651690768C87795E'; 
 
 function ViewAllRides() {
@@ -44,7 +45,7 @@ function ViewAllRides() {
     borderRadius: '12px',
     padding: '12px',
     zIndex: 1000,
-    fontSize: '16px',
+    fontSize: '1rem',
     width: "100%",
     maxHeight: "200px",
     overflowY: 'auto',
@@ -60,7 +61,7 @@ function ViewAllRides() {
     borderRadius: '12px',
     padding: '12px',
     zIndex: 1000,
-    fontSize: '16px',
+    fontSize: '1rem',
     width: "100%",
     maxHeight: "200px",
     overflowY: 'auto',
@@ -99,7 +100,7 @@ function ViewAllRides() {
               HostID: rideDetails[3],
               PeersID: rideDetails[4],
               Stops: rideDetails[5],
-              RideFare: web3.utils.fromWei(rideDetails[6], 'ether'), // Display in Sepolia ETH
+              RideFare: web3.utils.fromWei(rideDetails[6], 'ether'),
               RideSeatsAvailable: rideDetails[7],
               RideUpdates: rideDetails[8],
               RideDateandTime: rideDetails[9],
@@ -164,8 +165,8 @@ function ViewAllRides() {
       return;
     }
 
-    const fareInEth = ride.RideFare; // Already in Sepolia ETH
-    const fareInWei = web3.utils.toWei(fareInEth, 'ether'); // Convert to Wei for contract
+    const fareInEth = ride.RideFare;
+    const fareInWei = web3.utils.toWei(fareInEth, 'ether');
 
     try {
       const gasAmount = await contract.methods
@@ -176,14 +177,13 @@ function ViewAllRides() {
         .BookARide(passengerID, id, sourceValue, destinationValue)
         .send({
           from: accounts[0],
-          value: fareInWei, // Send exact fare in Wei
+          value: fareInWei,
           gas: gasAmount
         });
 
       console.log(`Ride Booked Successfully! ${fareInEth} Sepolia ETH held until leaving`);
       setShowRideBookedModal(true);
 
-      // Update local state to reflect booking
       setSelectedRides(prev =>
         prev.map(r =>
           r.RideID === id
@@ -268,7 +268,7 @@ function ViewAllRides() {
                   { to: `/myinprogressrides/${passengerID}`, icon: <FaCar />, text: 'Current Ride' },
                   { to: `/ridehistory/${passengerID}`, icon: <FaHistory />, text: 'History' },
                   { to: `/enterRideInbox/${passengerID}`, icon: <FaEnvelope />, text: 'Inbox' },
-                  { to: `/viewallrides/${passengerID}`, icon: <FaCarSide />, text: 'Check Rides' },
+                  { to: `/viewallrides/${passengerID}`, icon: <FaCar />, text: 'Check Rides' },
                   { to: `/startaride/${passengerID}`, icon: <RiCaravanFill />, text: 'Start Ride' }
                 ].map((item, index) => (
                   <Link
@@ -314,23 +314,49 @@ function ViewAllRides() {
             backdropFilter: 'blur(10px)',
             borderRadius: '20px',
             padding: '30px',
-            marginBottom: '30px',
-            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)'
+            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            marginBottom: '30px'
           }}>
-            <h2 style={{
-              color: '#2d3748',
-              fontSize: '1.8rem',
-              fontWeight: '700',
-              marginBottom: '25px',
-              textAlign: 'center',
+            <div style={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
-              gap: '12px'
+              gap: '15px',
+              marginBottom: '25px'
             }}>
-              <FaSearch style={{ color: '#667eea' }} />
-              Find Your Perfect Ride
-            </h2>
+              <div style={{
+                width: '60px',
+                height: '60px',
+                background: 'linear-gradient(45deg, #667eea, #764ba2)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1.5rem',
+                color: 'white'
+              }}>
+                <FaSearch />
+              </div>
+              <div>
+                <h2 style={{
+                  color: '#2d3748',
+                  fontSize: '2rem',
+                  fontWeight: '700',
+                  margin: '0 0 10px 0',
+                   display: 'flex'
+             
+                }}>
+                  Find Your Ride
+                </h2>
+                <div style={{
+                  color: '#718096',
+                  fontSize: '1.1rem',
+                  margin:0
+                }}>
+                  Search for available rides matching your route
+                </div>
+              </div>
+            </div>
 
             <div style={{
               display: 'grid',
@@ -341,19 +367,21 @@ function ViewAllRides() {
               {/* Source Input */}
               <div style={{ position: 'relative' }}>
                 <label style={{
-                  display: 'block',
-                  marginBottom: '8px',
+                  color: '#2d3748',
                   fontWeight: '600',
-                  color: '#4a5568',
-                  fontSize: '14px'
+                  fontSize: '0.9rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  marginBottom: '8px'
                 }}>
-                  <FaMapMarkerAlt style={{ color: '#48bb78', marginRight: '8px' }} />
+                  <FaMapMarkerAlt style={{ color: '#48bb78' }} />
                   From Location
                 </label>
                 <input
                   value={sourceValue}
                   onChange={handleSourceInputChange}
-                  placeholder='Enter pickup location'
+                  placeholder='Enter source location...'
                   type='text'
                   name='sourceLocation'
                   style={{
@@ -361,18 +389,17 @@ function ViewAllRides() {
                     padding: '15px 20px',
                     border: '2px solid #e2e8f0',
                     borderRadius: '12px',
-                    fontSize: '16px',
-                    outline: 'none',
-                    transition: 'all 0.3s ease',
-                    background: 'white'
+                    fontSize: '1rem',
+                    background: '#f7fafc',
+                    transition: 'all 0.3s ease'
                   }}
                   onFocus={(e) => {
                     e.target.style.borderColor = '#667eea';
-                    e.target.style.boxShadow = '0 0 0 3px rgba(102, 126, 234, 0.1)';
+                    e.target.style.background = 'white';
                   }}
                   onBlur={(e) => {
                     e.target.style.borderColor = '#e2e8f0';
-                    e.target.style.boxShadow = 'none';
+                    e.target.style.background = '#f7fafc';
                   }}
                 />
                 {filteredSourceLocations.length > 0 && sourceValue.length > 0 && soucedropdownOpen && (
@@ -383,23 +410,21 @@ function ViewAllRides() {
                         onClick={() => handleSourceLocationSelect(location)}
                         style={{
                           width: '100%',
-                          padding: '12px',
-                          textAlign: 'left',
+                          padding: '10px 15px',
                           border: 'none',
                           background: 'transparent',
+                          textAlign: 'left',
                           cursor: 'pointer',
+                          borderRadius: '8px',
                           transition: 'all 0.3s ease',
-                          borderRadius: '6px',
-                          color: '#4a5568',
-                          fontSize: '14px'
+                          color: '#2d3748',
+                          fontSize: '0.9rem'
                         }}
                         onMouseEnter={(e) => {
                           e.target.style.background = 'rgba(102, 126, 234, 0.1)';
-                          e.target.style.color = '#667eea';
                         }}
                         onMouseLeave={(e) => {
                           e.target.style.background = 'transparent';
-                          e.target.style.color = '#4a5568';
                         }}
                       >
                         {location}
@@ -412,19 +437,21 @@ function ViewAllRides() {
               {/* Destination Input */}
               <div style={{ position: 'relative' }}>
                 <label style={{
-                  display: 'block',
-                  marginBottom: '8px',
+                  color: '#2d3748',
                   fontWeight: '600',
-                  color: '#4a5568',
-                  fontSize: '14px'
+                  fontSize: '0.9rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  marginBottom: '8px'
                 }}>
-                  <FaMapMarkerAlt style={{ color: '#e53e3e', marginRight: '8px' }} />
+                  <FaMapMarkerAlt style={{ color: '#e53e3e' }} />
                   To Location
                 </label>
                 <input
                   value={destinationValue}
                   onChange={handleDestinationInputChange}
-                  placeholder='Enter drop location'
+                  placeholder='Enter destination location...'
                   type='text'
                   name='destinationLocation'
                   style={{
@@ -432,18 +459,17 @@ function ViewAllRides() {
                     padding: '15px 20px',
                     border: '2px solid #e2e8f0',
                     borderRadius: '12px',
-                    fontSize: '16px',
-                    outline: 'none',
-                    transition: 'all 0.3s ease',
-                    background: 'white'
+                    fontSize: '1rem',
+                    background: '#f7fafc',
+                    transition: 'all 0.3s ease'
                   }}
                   onFocus={(e) => {
                     e.target.style.borderColor = '#667eea';
-                    e.target.style.boxShadow = '0 0 0 3px rgba(102, 126, 234, 0.1)';
+                    e.target.style.background = 'white';
                   }}
                   onBlur={(e) => {
                     e.target.style.borderColor = '#e2e8f0';
-                    e.target.style.boxShadow = 'none';
+                    e.target.style.background = '#f7fafc';
                   }}
                 />
                 {filteredDestinationLocations.length > 0 && destinationValue.length > 0 && destinationdropdownOpen && (
@@ -454,23 +480,21 @@ function ViewAllRides() {
                         onClick={() => handleDestinationLocationSelect(location)}
                         style={{
                           width: '100%',
-                          padding: '12px',
-                          textAlign: 'left',
+                          padding: '10px 15px',
                           border: 'none',
                           background: 'transparent',
+                          textAlign: 'left',
                           cursor: 'pointer',
+                          borderRadius: '8px',
                           transition: 'all 0.3s ease',
-                          borderRadius: '6px',
-                          color: '#4a5568',
-                          fontSize: '14px'
+                          color: '#2d3748',
+                          fontSize: '0.9rem'
                         }}
                         onMouseEnter={(e) => {
                           e.target.style.background = 'rgba(102, 126, 234, 0.1)';
-                          e.target.style.color = '#667eea';
                         }}
                         onMouseLeave={(e) => {
                           e.target.style.background = 'transparent';
-                          e.target.style.color = '#4a5568';
                         }}
                       >
                         {location}
@@ -484,37 +508,33 @@ function ViewAllRides() {
               <button
                 onClick={handleSearchRides}
                 style={{
-                  background: 'linear-gradient(45deg, #667eea, #764ba2)',
+                  background: 'linear-gradient(45deg, #48bb78, #38a169)',
                   color: 'white',
                   border: 'none',
                   padding: '15px 30px',
                   borderRadius: '12px',
-                  fontSize: '16px',
+                  fontSize: '1rem',
                   fontWeight: '600',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
-                  boxShadow: '0 8px 25px rgba(102, 126, 234, 0.4)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px',
+                  boxShadow: '0 8px 25px rgba(72, 187, 120, 0.4)',
                   height: 'fit-content'
                 }}
                 onMouseEnter={(e) => {
                   e.target.style.transform = 'translateY(-3px)';
-                  e.target.style.boxShadow = '0 12px 30px rgba(102, 126, 234, 0.5)';
+                  e.target.style.boxShadow = '0 12px 30px rgba(72, 187, 120, 0.5)';
                 }}
                 onMouseLeave={(e) => {
                   e.target.style.transform = 'translateY(0)';
-                  e.target.style.boxShadow = '0 8px 25px rgba(102, 126, 234, 0.4)';
+                  e.target.style.boxShadow = '0 8px 25px rgba(72, 187, 120, 0.4)';
                 }}
               >
-                <FaSearch />
                 Search Rides
               </button>
             </div>
           </div>
 
-          {/* Results Section */}
+          {/* Rides Results Section */}
           {!isSelectedRidesLoading && isSearchStarted && (
             <div style={{
               background: 'rgba(255, 255, 255, 0.95)',
@@ -522,23 +542,49 @@ function ViewAllRides() {
               borderRadius: '20px',
               padding: '30px',
               boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
               flex: 1
             }}>
               <div style={{
-                background: 'linear-gradient(45deg, #667eea, #764ba2)',
-                color: 'white',
-                padding: '20px',
-                borderRadius: '15px',
-                textAlign: 'center',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '15px',
                 marginBottom: '25px'
               }}>
-                <h3 style={{
-                  fontSize: '1.5rem',
-                  fontWeight: '700',
-                  margin: 0
+                <div style={{
+                  width: '50px',
+                  height: '50px',
+                  background: 'linear-gradient(45deg, #667eea, #764ba2)',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1.2rem',
+                  color: 'white'
                 }}>
-                  🚗 Available Rides ({selectedRides.length})
-                </h3>
+                  <FaCar />
+                </div>
+                <div>
+                  <h3 style={{
+                    color: '#2d3748',
+                    fontSize: '1.5rem',
+                    fontWeight: '700',
+                    margin: '0 0 5px 0'
+                  }}>
+                    Available Rides
+                  </h3>
+                  <div style={{
+                    background: 'linear-gradient(45deg, #48bb78, #38a169)',
+                    color: 'white',
+                    padding: '4px 12px',
+                    borderRadius: '12px',
+                    fontSize: '0.8rem',
+                    fontWeight: '600',
+                    display: 'inline-block'
+                  }}>
+                    {selectedRides.length} {selectedRides.length === 1 ? 'Ride' : 'Rides'} Found
+                  </div>
+                </div>
               </div>
 
               <div style={{
@@ -549,276 +595,248 @@ function ViewAllRides() {
                 overflowY: 'auto',
                 paddingRight: '10px'
               }}>
-                {selectedRides.length > 0 ? (
-                  selectedRides.map((ride) => (
-                    <div 
-                      key={ride.RideID}
-                      style={{
-                        background: 'rgba(255, 255, 255, 0.8)',
-                        backdropFilter: 'blur(5px)',
-                        borderRadius: '15px',
-                        padding: '25px',
-                        border: '2px solid rgba(102, 126, 234, 0.1)',
-                        transition: 'all 0.3s ease',
-                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-5px)';
-                        e.currentTarget.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.15)';
-                        e.currentTarget.style.borderColor = 'rgba(102, 126, 234, 0.3)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-                        e.currentTarget.style.borderColor = 'rgba(102, 126, 234, 0.1)';
-                      }}
-                    >
+                {selectedRides.map((ride) => (
+                  <div key={ride.RideID} style={{
+                    background: '#f7fafc',
+                    borderRadius: '15px',
+                    padding: '25px',
+                    border: '2px solid #e2e8f0',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(102, 126, 234, 0.05)';
+                    e.currentTarget.style.borderColor = 'rgba(102, 126, 234, 0.3)';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.1)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = '#f7fafc';
+                    e.currentTarget.style.borderColor = '#e2e8f0';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                  >
+                    <div style={{
+                      display: 'grid',
+                      gridTemplateColumns: '1fr auto',
+                      gap: '20px',
+                      alignItems: 'start'
+                    }}>
+                      {/* Ride Info */}
                       <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: '1fr auto',
-                        gap: '20px',
-                        alignItems: 'start'
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '15px'
                       }}>
-                        {/* Ride Info */}
                         <div style={{
                           display: 'flex',
-                          flexDirection: 'column',
-                          gap: '15px'
+                          alignItems: 'center',
+                          gap: '15px',
+                          flexWrap: 'wrap'
+                        }}>
+                          <div style={{
+                            background: 'linear-gradient(45deg, #667eea, #764ba2)',
+                            color: 'white',
+                            padding: '4px 12px',
+                            borderRadius: '12px',
+                            fontSize: '0.8rem',
+                            fontWeight: '600'
+                          }}>
+                            Ride ID: {ride.RideID}
+                          </div>
+                          <div style={{
+                            background: ride.HostID == passengerID ? '#ed8936' : '#48bb78',
+                            color: 'white',
+                            padding: '4px 12px',
+                            borderRadius: '12px',
+                            fontSize: '0.8rem',
+                            fontWeight: '600'
+                          }}>
+                            {ride.HostID == passengerID ? 'Host' : 'Passenger'}
+                          </div>
+                          <div style={{
+                            background: ride.isRideStarted ? '#e53e3e' : '#48bb78',
+                            color: 'white',
+                            padding: '4px 12px',
+                            borderRadius: '12px',
+                            fontSize: '0.8rem',
+                            fontWeight: '600'
+                          }}>
+                            {ride.isRideStarted ? 'Started' : 'Not Started'}
+                          </div>
+                        </div>
+
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '12px',
+                          color: '#4a5568'
+                        }}>
+                          <FaMapMarkerAlt style={{ color: '#48bb78' }} />
+                          <div style={{ fontSize: '0.9rem', fontWeight: '500' }}>
+                            <strong>From:</strong> {ride.RideSourceLocation}
+                          </div>
+                        </div>
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '12px',
+                          color: '#4a5568'
+                        }}>
+                          <FaMapMarkerAlt style={{ color: '#e53e3e' }} />
+                          <div style={{ fontSize: '0.9rem', fontWeight: '500' }}>
+                            <strong>To:</strong> {ride.RideDestinationLocation}
+                          </div>
+                        </div>
+
+                        <div style={{
+                          display: 'flex',
+                          gap: '20px',
+                          flexWrap: 'wrap'
                         }}>
                           <div style={{
                             display: 'flex',
                             alignItems: 'center',
-                            gap: '15px',
-                            flexWrap: 'wrap'
+                            gap: '8px',
+                            color: '#4a5568',
+                            fontSize: '0.9rem'
                           }}>
-                            <div style={{
-                              background: 'linear-gradient(45deg, #667eea, #764ba2)',
-                              color: 'white',
-                              padding: '8px 16px',
-                              borderRadius: '20px',
-                              fontSize: '0.9rem',
-                              fontWeight: '700'
-                            }}>
-                              Ride #{ride.RideID}
-                            </div>
-                            <div style={{
-                              background: ride.HostID === passengerID ? '#e53e3e' : '#48bb78',
-                              color: 'white',
-                              padding: '8px 16px',
-                              borderRadius: '20px',
-                              fontSize: '0.9rem',
-                              fontWeight: '600'
-                            }}>
-                              {ride.HostID === passengerID ? 'Host' : 'Passenger'}
-                            </div>
-                            <div style={{
-                              background: '#f7fafc',
-                              color: '#4a5568',
-                              padding: '8px 16px',
-                              borderRadius: '20px',
-                              fontSize: '0.9rem',
-                              fontWeight: '600',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '6px'
-                            }}>
-                              <FaWallet />
-                              {ride.RideFare} Sepolia ETH
-                            </div>
+                            <FaDollarSign style={{ color: '#667eea' }} />
+                            <strong>Fare:</strong> {ride.RideFare} ETH
                           </div>
-
-                          <div style={{
-                            display: 'grid',
-                            gap: '10px'
-                          }}>
-                            <div style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '10px',
-                              color: '#4a5568'
-                            }}>
-                              <FaMapMarkerAlt style={{ color: '#48bb78' }} />
-                              <strong>From:</strong> {ride.RideSourceLocation}
-                            </div>
-                            <div style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '10px',
-                              color: '#4a5568'
-                            }}>
-                              <FaMapMarkerAlt style={{ color: '#e53e3e' }} />
-                              <strong>To:</strong> {ride.RideDestinationLocation}
-                            </div>
-                          </div>
-
                           <div style={{
                             display: 'flex',
-                            gap: '20px',
-                            flexWrap: 'wrap'
+                            alignItems: 'center',
+                            gap: '8px',
+                            color: '#4a5568',
+                            fontSize: '0.9rem'
                           }}>
-                            <div style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '6px',
-                              color: '#718096',
-                              fontSize: '0.9rem'
-                            }}>
-                              <FaCar />
-                              <span>{ride.RideSeatsAvailable} seats available</span>
-                            </div>
-                            <div style={{
-                              background: ride.isRideStarted && !ride.isRideEnded ? '#f6ad55' : 
-                                        !ride.isRideStarted ? '#48bb78' : '#e53e3e',
-                              color: 'white',
-                              padding: '6px 12px',
-                              borderRadius: '15px',
-                              fontSize: '0.8rem',
-                              fontWeight: '600'
-                            }}>
-                              {ride.isRideStarted && !ride.isRideEnded ? "Started" : !ride.isRideStarted ? "Not Started" : "Ended"}
-                            </div>
+                            <FaUsers style={{ color: '#667eea' }} />
+                            <strong>Seats:</strong> {ride.RideSeatsAvailable}
                           </div>
                         </div>
+                      </div>
 
-                        {/* Action Buttons */}
-                        <div style={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          gap: '10px',
-                          minWidth: '200px'
-                        }}>
-                          {!(ride.HostID === passengerID) && (
-                            <button
-                              onClick={() => handleBookRide(ride.RideID)}
-                              disabled={ride.PeersID.includes(passengerID)}
-                              style={{
-                                background: ride.PeersID.includes(passengerID) 
-                                  ? '#a0aec0' 
-                                  : 'linear-gradient(45deg, #48bb78, #38a169)',
-                                color: 'white',
-                                border: 'none',
-                                padding: '12px 20px',
-                                borderRadius: '10px',
-                                fontSize: '14px',
-                                fontWeight: '600',
-                                cursor: ride.PeersID.includes(passengerID) ? 'not-allowed' : 'pointer',
-                                transition: 'all 0.3s ease',
-                                opacity: ride.PeersID.includes(passengerID) ? 0.6 : 1
-                              }}
-                              onMouseEnter={(e) => {
-                                if (!ride.PeersID.includes(passengerID)) {
-                                  e.target.style.transform = 'translateY(-2px)';
-                                  e.target.style.boxShadow = '0 6px 20px rgba(72, 187, 120, 0.4)';
-                                }
-                              }}
-                              onMouseLeave={(e) => {
-                                if (!ride.PeersID.includes(passengerID)) {
-                                  e.target.style.transform = 'translateY(0)';
-                                  e.target.style.boxShadow = 'none';
-                                }
-                              }}
-                            >
-                              {ride.PeersID.includes(passengerID) ? '✓ Already Booked' : 'Book This Ride'}
-                            </button>
-                          )}
+                      {/* Action Buttons */}
+                      <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '10px',
+                        minWidth: '200px'
+                      }}>
+                        {!(ride.HostID == passengerID) && (
                           <button
-                            onClick={() => handleLogin(ride.RideID)}
+                            onClick={() => handleBookRide(ride.RideID)}
+                            disabled={ride.PeersID.includes(passengerID)}
                             style={{
-                              background: 'linear-gradient(45deg, #667eea, #764ba2)',
+                              background: ride.PeersID.includes(passengerID) 
+                                ? 'linear-gradient(45deg, #cccccc, #999999)' 
+                                : 'linear-gradient(45deg, #48bb78, #38a169)',
                               color: 'white',
                               border: 'none',
                               padding: '12px 20px',
                               borderRadius: '10px',
-                              fontSize: '14px',
+                              fontSize: '0.9rem',
                               fontWeight: '600',
-                              cursor: 'pointer',
-                              transition: 'all 0.3s ease'
+                              cursor: ride.PeersID.includes(passengerID) ? 'not-allowed' : 'pointer',
+                              transition: 'all 0.3s ease',
+                              boxShadow: ride.PeersID.includes(passengerID) 
+                                ? 'none' 
+                                : '0 4px 15px rgba(72, 187, 120, 0.3)'
                             }}
                             onMouseEnter={(e) => {
-                              e.target.style.transform = 'translateY(-2px)';
-                              e.target.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.4)';
+                              if (!ride.PeersID.includes(passengerID)) {
+                                e.target.style.transform = 'translateY(-2px)';
+                                e.target.style.boxShadow = '0 6px 20px rgba(72, 187, 120, 0.4)';
+                              }
                             }}
                             onMouseLeave={(e) => {
-                              e.target.style.transform = 'translateY(0)';
-                              e.target.style.boxShadow = 'none';
+                              if (!ride.PeersID.includes(passengerID)) {
+                                e.target.style.transform = 'translateY(0)';
+                                e.target.style.boxShadow = '0 4px 15px rgba(72, 187, 120, 0.3)';
+                              }
                             }}
                           >
-                            View Ride Details
+                            {ride.PeersID.includes(passengerID) ? 'Already Booked' : 'Book Ride'}
                           </button>
-                        </div>
+                        )}
+                        <button
+                          onClick={() => handleLogin(ride.RideID)}
+                          style={{
+                            background: 'linear-gradient(45deg, #667eea, #764ba2)',
+                            color: 'white',
+                            border: 'none',
+                            padding: '12px 20px',
+                            borderRadius: '10px',
+                            fontSize: '0.9rem',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            transition: 'all 0.3s ease',
+                            boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.target.style.transform = 'translateY(-2px)';
+                            e.target.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.4)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.target.style.transform = 'translateY(0)';
+                            e.target.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.3)';
+                          }}
+                        >
+                          View Ride Details
+                        </button>
                       </div>
                     </div>
-                  ))
-                ) : (
-                  <div style={{
-                    textAlign: 'center',
-                    padding: '60px 20px',
-                    color: '#718096'
-                  }}>
-                    <div style={{
-                      fontSize: '4rem',
-                      marginBottom: '20px',
-                      opacity: '0.5'
-                    }}>
-                      🔍
-                    </div>
-                    <h4 style={{
-                      color: '#4a5568',
-                      marginBottom: '10px',
-                      fontWeight: '600'
-                    }}>
-                      No Rides Found
-                    </h4>
-                    <p style={{
-                      margin: 0,
-                      fontSize: '1rem'
-                    }}>
-                      Try adjusting your search criteria to find available rides
-                    </p>
                   </div>
-                )}
+                ))}
               </div>
             </div>
           )}
 
-          {/* Initial State */}
+          {/* Empty State */}
           {!isSearchStarted && (
             <div style={{
               background: 'rgba(255, 255, 255, 0.95)',
               backdropFilter: 'blur(10px)',
               borderRadius: '20px',
-              padding: '60px 40px',
+              padding: '60px 30px',
               boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
               textAlign: 'center',
               flex: 1,
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center'
+              alignItems: 'center',
+              justifyContent: 'center'
             }}>
               <div style={{
-                fontSize: '5rem',
-                marginBottom: '20px',
-                opacity: '0.7'
+                width: '80px',
+                height: '80px',
+                background: 'linear-gradient(45deg, #667eea, #764ba2)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '2rem',
+                color: 'white',
+                marginBottom: '20px'
               }}>
-                🚗
+                <FaSearch />
               </div>
               <h3 style={{
                 color: '#2d3748',
-                fontSize: '1.8rem',
+                fontSize: '1.5rem',
                 fontWeight: '700',
-                marginBottom: '15px'
+                marginBottom: '10px'
               }}>
-                Ready to Ride?
+                Find Your Perfect Ride
               </h3>
               <p style={{
                 color: '#718096',
-                fontSize: '1.1rem',
-                margin: 0,
-                maxWidth: '500px',
-                lineHeight: '1.6'
+                fontSize: '1rem',
+                maxWidth: '400px'
               }}>
-                Enter your pickup and drop locations above to discover available carpool rides that match your journey.
+                Select your source and destination locations to discover available rides that match your route.
               </p>
             </div>
           )}
@@ -844,72 +862,57 @@ function ViewAllRides() {
         </div>
       )}
 
-      {/* Success Modal */}
-      <Modal show={showRideBookedModal} onHide={handleRideBookedModal} centered>
+      {/* Ride Booked Modal */}
+      <Modal show={showRideBookedModal} onHide={handleRideBookedModal} size="lg" centered>
         <Modal.Header style={{
-          background: 'linear-gradient(45deg, #48bb78, #38a169)',
-          color: 'white',
-          borderBottom: 'none',
-          borderRadius: '15px 15px 0 0'
+          background: 'linear-gradient(45deg, #667eea, #764ba2)',
+          border: 'none'
         }}>
-          <Modal.Title style={{
-            fontWeight: '700',
-            fontSize: '1.3rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px'
-          }}>
-            ✅ Ride Booked Successfully!
-          </Modal.Title>
+          <h4 style={{fontWeight:"700", color:'white', margin: 0}}>Success!</h4>
         </Modal.Header>
-        <Modal.Body style={{ 
-          padding: '30px',
-          textAlign: 'center'
-        }}>
-          <div style={{
-            fontSize: '3rem',
-            marginBottom: '20px'
-          }}>
-            🎉
-          </div>
-          <h5 style={{
-            color: '#2d3748',
-            marginBottom: '15px',
-            fontWeight: '600'
-          }}>
-            You're All Set!
-          </h5>
-          <p style={{
-            color: '#718096',
-            lineHeight: '1.6',
-            margin: 0
-          }}>
-            Your ride has been successfully booked! You can check the status and details of this ride in the <strong>Current Ride</strong> section.
-          </p>
-        </Modal.Body>
-        <Modal.Footer style={{ borderTop: 'none', justifyContent: 'center' }}>
-          <button 
-            onClick={handleRideBookedModal}
-            style={{
+        <Modal.Body style={{textAlign:"center", padding: '30px'}}>
+          <div style={{alignSelf:"center", textAlign:"center"}}>
+            <div style={{
+              width: '60px',
+              height: '60px',
               background: 'linear-gradient(45deg, #48bb78, #38a169)',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '1.5rem',
               color: 'white',
-              border: 'none',
-              padding: '12px 30px',
-              borderRadius: '10px',
-              fontWeight: '600',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = 'translateY(-2px)';
-              e.target.style.boxShadow = '0 4px 12px rgba(72, 187, 120, 0.3)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = 'none';
-            }}
+              margin: '0 auto 20px'
+            }}>
+              ✓
+            </div>
+            <h4 style={{alignSelf:"center", color:'#2d3748', fontWeight:"700", fontSize:"1.5rem", marginBottom: '10px'}}>Ride Booked Successfully!</h4>
+            <p style={{alignSelf:"center", color:'#718096', fontSize:"1rem"}}>
+              Check the status of this ride in the <b>Current Ride</b> section
+            </p>
+          </div>
+        </Modal.Body>
+        <Modal.Footer style={{border: 'none', justifyContent: 'center'}}>
+          <button onClick={handleRideBookedModal} style={{
+            background: 'linear-gradient(45deg, #667eea, #764ba2)',
+            color: 'white',
+            border: 'none',
+            padding: '10px 25px',
+            borderRadius: '8px',
+            fontWeight: '600',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease'
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.transform = 'translateY(-2px)';
+            e.target.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.4)';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.transform = 'translateY(0)';
+            e.target.style.boxShadow = 'none';
+          }}
           >
-            Got It!
+            Close
           </button>
         </Modal.Footer>
       </Modal>

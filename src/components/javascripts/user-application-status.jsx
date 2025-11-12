@@ -173,44 +173,128 @@ function AdministratorDashboardUserApplicationStatus() {
 
     return (
         <div style={{
-            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            background: "linear-gradient(135deg, #0a0a2a 0%, #1a1a4a 50%, #0f0c29 100%)",
             minHeight: "100vh",
-            padding: "20px",
-            fontFamily: "'Inter', sans-serif"
+            padding: "0",
+            fontFamily: "'Inter', sans-serif",
+            position: "relative",
+            overflow: "hidden"
         }}>
+            
+            {/* Animated Background Elements */}
+            <div style={{
+                position: "absolute",
+                top: "10%",
+                left: "5%",
+                width: "300px",
+                height: "300px",
+                background: "radial-gradient(circle, rgba(86, 119, 252, 0.15) 0%, transparent 70%)",
+                borderRadius: "50%",
+                animation: "float 8s ease-in-out infinite",
+                filter: "blur(40px)"
+            }}></div>
+            
+            <div style={{
+                position: "absolute",
+                bottom: "15%",
+                right: "10%",
+                width: "250px",
+                height: "250px",
+                background: "radial-gradient(circle, rgba(56, 182, 255, 0.1) 0%, transparent 70%)",
+                borderRadius: "50%",
+                animation: "float 6s ease-in-out infinite reverse",
+                filter: "blur(30px)"
+            }}></div>
+
+            {/* Floating Particles */}
+            {[...Array(20)].map((_, i) => (
+                <div key={i} style={{
+                    position: "absolute",
+                    width: `${Math.random() * 6 + 2}px`,
+                    height: `${Math.random() * 6 + 2}px`,
+                    background: "rgba(86, 119, 252, 0.6)",
+                    borderRadius: "50%",
+                    top: `${Math.random() * 100}%`,
+                    left: `${Math.random() * 100}%`,
+                    animation: `floatParticle ${Math.random() * 15 + 10}s linear infinite`,
+                    animationDelay: `${Math.random() * 5}s`,
+                    filter: 'blur(1px)'
+                }}></div>
+            ))}
+
             {/* Header */}
             <header style={{
-                background: "rgba(255, 255, 255, 0.95)",
-                backdropFilter: "blur(10px)",
-                borderRadius: "20px",
-                padding: "20px 40px",
-                marginBottom: "30px",
-                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)"
+                background: "rgba(10, 10, 42, 0.8)",
+                backdropFilter: "blur(15px)",
+                padding: "20px 0",
+                borderBottom: "1px solid rgba(86, 119, 252, 0.2)",
+                position: "sticky",
+                top: 0,
+                zIndex: 1000
             }}>
                 <div style={{
+                    maxWidth: "1400px",
+                    margin: "0 auto",
+                    padding: "0 40px",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center"
                 }}>
-                    <h1 style={{
-                        margin: 0,
-                        background: "linear-gradient(45deg, #667eea, #764ba2)",
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                        fontSize: "2.5rem",
-                        fontWeight: "800"
+                    <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "15px"
                     }}>
-                        CARPOOL VERIFICATION
-                    </h1>
+                        <div style={{
+                            width: "50px",
+                            height: "50px",
+                            background: "linear-gradient(45deg, #5677FC, #38B6FF)",
+                            borderRadius: "12px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: "1.5rem",
+                            fontWeight: "bold",
+                            color: "white",
+                            boxShadow: "0 8px 25px rgba(86, 119, 252, 0.4)"
+                        }}>
+                            📊
+                        </div>
+                        <h1 style={{
+                            margin: 0,
+                            background: "linear-gradient(45deg, #38B6FF, #5677FC)",
+                            WebkitBackgroundClip: "text",
+                            WebkitTextFillColor: "transparent",
+                            backgroundClip: "text",
+                            fontSize: "2.2rem",
+                            fontWeight: "800"
+                        }}>
+                            VERIFICATION PORTAL
+                        </h1>
+                    </div>
+                    
                     <a href="/" style={{
                         textDecoration: "none",
-                        color: "#667eea",
-                        fontWeight: "600",
-                        padding: "10px 20px",
-                        border: "2px solid #667eea",
-                        borderRadius: "10px",
-                        transition: "all 0.3s ease"
-                    }}>
+                        color: "#38B6FF",
+                        fontWeight: "700",
+                        padding: "12px 25px",
+                        border: "2px solid rgba(86, 119, 252, 0.3)",
+                        borderRadius: "12px",
+                        transition: "all 0.3s ease",
+                        background: "rgba(255, 255, 255, 0.05)",
+                        backdropFilter: "blur(10px)"
+                    }}
+                    onMouseEnter={(e) => {
+                        e.target.style.background = "rgba(86, 119, 252, 0.2)";
+                        e.target.style.borderColor = "#5677FC";
+                        e.target.style.transform = "translateY(-2px)";
+                    }}
+                    onMouseLeave={(e) => {
+                        e.target.style.background = "rgba(255, 255, 255, 0.05)";
+                        e.target.style.borderColor = "rgba(86, 119, 252, 0.3)";
+                        e.target.style.transform = "translateY(0)";
+                    }}
+                    >
                         ← Back to Home
                     </a>
                 </div>
@@ -218,30 +302,40 @@ function AdministratorDashboardUserApplicationStatus() {
 
             {/* Main Content */}
             <div style={{
-                maxWidth: "1200px",
-                margin: "0 auto"
+                maxWidth: "1400px",
+                margin: "60px auto",
+                padding: "0 40px",
+                position: "relative",
+                zIndex: 2
             }}>
 
                 {/* Welcome Section */}
                 <div style={{
                     textAlign: "center",
-                    marginBottom: "40px",
+                    marginBottom: "60px",
                     color: "white"
                 }}>
                     <h2 style={{
-                        fontSize: "2.5rem",
-                        fontWeight: "700",
-                        marginBottom: "10px",
-                        textShadow: "0 2px 4px rgba(0,0,0,0.3)"
+                        fontSize: "3rem",
+                        fontWeight: "800",
+                        marginBottom: "15px",
+                        textShadow: "0 4px 8px rgba(0,0,0,0.3)",
+                        background: "linear-gradient(45deg, #38B6FF, #5677FC)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text"
                     }}>
                         Application Verification Portal
                     </h2>
                     <p style={{
-                        fontSize: "1.2rem",
+                        fontSize: "1.3rem",
                         fontWeight: "500",
-                        opacity: "0.9"
+                        opacity: "0.9",
+                        maxWidth: "600px",
+                        margin: "0 auto",
+                        lineHeight: "1.6"
                     }}>
-                        Track your application status and manage your profile
+                        Track your application status and manage your carpooling profile with our secure blockchain-powered system
                     </p>
                 </div>
 
@@ -250,133 +344,162 @@ function AdministratorDashboardUserApplicationStatus() {
                     <div style={{
                         display: "grid",
                         gridTemplateColumns: "1fr 1fr",
-                        gap: "30px",
-                        marginBottom: "40px"
+                        gap: "40px",
+                        marginBottom: "50px"
                     }}>
                         {/* Existing Application Card */}
                         <div style={{
-                            background: "rgba(255, 255, 255, 0.95)",
-                            borderRadius: "20px",
-                            padding: "40px",
+                            background: "rgba(255, 255, 255, 0.05)",
+                            backdropFilter: "blur(20px)",
+                            borderRadius: "25px",
+                            padding: "50px 40px",
                             textAlign: "center",
-                            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15)",
-                            backdropFilter: "blur(10px)",
-                            transition: "all 0.3s ease",
+                            border: "1px solid rgba(255, 255, 255, 0.1)",
+                            boxShadow: "0 25px 50px rgba(0, 0, 0, 0.3)",
+                            transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
                             cursor: "pointer",
-                            border: "3px solid transparent"
-                        }} onMouseEnter={(e) => {
-                            e.currentTarget.style.transform = "translateY(-5px)";
-                            e.currentTarget.style.borderColor = "#667eea";
-                        }} onMouseLeave={(e) => {
-                            e.currentTarget.style.transform = "translateY(0)";
-                            e.currentTarget.style.borderColor = "transparent";
-                        }} onClick={() => {
+                            position: "relative",
+                            overflow: "hidden"
+                        }} 
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = "translateY(-10px) scale(1.02)";
+                            e.currentTarget.style.borderColor = "rgba(86, 119, 252, 0.3)";
+                            e.currentTarget.style.boxShadow = "0 35px 60px rgba(86, 119, 252, 0.2)";
+                        }} 
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = "translateY(0) scale(1)";
+                            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
+                            e.currentTarget.style.boxShadow = "0 25px 50px rgba(0, 0, 0, 0.3)";
+                        }} 
+                        onClick={() => {
                             handleExistingApplication();
                             handleHideOriginalSection();
                         }}>
                             <div style={{
-                                width: "80px",
-                                height: "80px",
-                                background: "linear-gradient(45deg, #667eea, #764ba2)",
+                                width: "100px",
+                                height: "100px",
+                                background: "linear-gradient(45deg, #5677FC, #38B6FF)",
                                 borderRadius: "50%",
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                margin: "0 auto 20px",
-                                fontSize: "2rem"
+                                margin: "0 auto 30px",
+                                fontSize: "2.5rem",
+                                boxShadow: "0 15px 35px rgba(86, 119, 252, 0.4)",
+                                animation: "pulse 3s ease-in-out infinite"
                             }}>
                                 📋
                             </div>
                             <h3 style={{
-                                color: "#2d3748",
-                                marginBottom: "15px",
-                                fontSize: "1.5rem",
-                                fontWeight: "600"
+                                color: "white",
+                                marginBottom: "20px",
+                                fontSize: "1.8rem",
+                                fontWeight: "700"
                             }}>
                                 Track Existing Application
                             </h3>
                             <p style={{
-                                color: "#718096",
-                                marginBottom: "25px",
-                                lineHeight: "1.6"
+                                color: "rgba(255, 255, 255, 0.8)",
+                                marginBottom: "30px",
+                                lineHeight: "1.6",
+                                fontSize: "1.1rem",
+                                fontWeight: "500"
                             }}>
-                                Already have an application in progress? Check your status and view details.
+                                Already have an application in progress? Check your status, view details, and track the verification process.
                             </p>
-                            <button style={{
-                                background: "linear-gradient(45deg, #667eea, #764ba2)",
-                                color: "white",
-                                border: "none",
-                                padding: "15px 30px",
-                                borderRadius: "10px",
-                                fontSize: "1rem",
-                                fontWeight: "600",
+                            <div style={{
+                                background: "rgba(86, 119, 252, 0.2)",
+                                color: "#38B6FF",
+                                padding: "18px 30px",
+                                borderRadius: "15px",
+                                fontSize: "1.1rem",
+                                fontWeight: "700",
                                 cursor: "pointer",
                                 transition: "all 0.3s ease",
-                                width: "100%"
+                                border: "2px solid rgba(86, 119, 252, 0.3)",
+                                backdropFilter: "blur(10px)"
                             }}>
                                 View Application Status
-                            </button>
+                            </div>
                         </div>
 
                         {/* New Application Card */}
                         <div style={{
-                            background: "rgba(255, 255, 255, 0.95)",
-                            borderRadius: "20px",
-                            padding: "40px",
+                            background: "rgba(255, 255, 255, 0.05)",
+                            backdropFilter: "blur(20px)",
+                            borderRadius: "25px",
+                            padding: "50px 40px",
                             textAlign: "center",
-                            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15)",
-                            backdropFilter: "blur(10px)",
-                            transition: "all 0.3s ease",
+                            border: "1px solid rgba(255, 255, 255, 0.1)",
+                            boxShadow: "0 25px 50px rgba(0, 0, 0, 0.3)",
+                            transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
                             cursor: "pointer",
-                            border: "3px solid transparent"
-                        }} onMouseEnter={(e) => {
-                            e.currentTarget.style.transform = "translateY(-5px)";
-                            e.currentTarget.style.borderColor = "#667eea";
-                        }} onMouseLeave={(e) => {
-                            e.currentTarget.style.transform = "translateY(0)";
-                            e.currentTarget.style.borderColor = "transparent";
+                            position: "relative",
+                            overflow: "hidden"
+                        }} 
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = "translateY(-10px) scale(1.02)";
+                            e.currentTarget.style.borderColor = "rgba(86, 119, 252, 0.3)";
+                            e.currentTarget.style.boxShadow = "0 35px 60px rgba(86, 119, 252, 0.2)";
+                        }} 
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = "translateY(0) scale(1)";
+                            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
+                            e.currentTarget.style.boxShadow = "0 25px 50px rgba(0, 0, 0, 0.3)";
                         }}>
                             <div style={{
-                                width: "80px",
-                                height: "80px",
-                                background: "linear-gradient(45deg, #667eea, #764ba2)",
+                                width: "100px",
+                                height: "100px",
+                                background: "linear-gradient(45deg, #5677FC, #38B6FF)",
                                 borderRadius: "50%",
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                margin: "0 auto 20px",
-                                fontSize: "2rem"
+                                margin: "0 auto 30px",
+                                fontSize: "2.5rem",
+                                boxShadow: "0 15px 35px rgba(86, 119, 252, 0.4)",
+                                animation: "pulse 3s ease-in-out infinite"
                             }}>
                                 🚀
                             </div>
                             <h3 style={{
-                                color: "#2d3748",
-                                marginBottom: "15px",
-                                fontSize: "1.5rem",
-                                fontWeight: "600"
+                                color: "white",
+                                marginBottom: "20px",
+                                fontSize: "1.8rem",
+                                fontWeight: "700"
                             }}>
                                 Start New Application
                             </h3>
                             <p style={{
-                                color: "#718096",
-                                marginBottom: "25px",
-                                lineHeight: "1.6"
+                                color: "rgba(255, 255, 255, 0.8)",
+                                marginBottom: "30px",
+                                lineHeight: "1.6",
+                                fontSize: "1.1rem",
+                                fontWeight: "500"
                             }}>
-                                Begin your journey with our carpool community. Create a fresh application.
+                                Begin your journey with our carpool community. Create a fresh application and join our eco-friendly network.
                             </p>
                             <Link to={`/new-application-for-passenger`} style={{
                                 display: "block",
-                                background: "linear-gradient(45deg, #667eea, #764ba2)",
-                                color: "white",
-                                border: "none",
-                                padding: "15px 30px",
-                                borderRadius: "10px",
-                                fontSize: "1rem",
-                                fontWeight: "600",
+                                background: "rgba(86, 119, 252, 0.2)",
+                                color: "#38B6FF",
+                                padding: "18px 30px",
+                                borderRadius: "15px",
+                                fontSize: "1.1rem",
+                                fontWeight: "700",
                                 cursor: "pointer",
                                 transition: "all 0.3s ease",
                                 textDecoration: "none",
-                                width: "100%"
+                                border: "2px solid rgba(86, 119, 252, 0.3)",
+                                backdropFilter: "blur(10px)"
+                            }}
+                            onMouseEnter={(e) => {
+                                e.target.style.background = "rgba(86, 119, 252, 0.3)";
+                                e.target.style.transform = "translateY(-2px)";
+                            }}
+                            onMouseLeave={(e) => {
+                                e.target.style.background = "rgba(86, 119, 252, 0.2)";
+                                e.target.style.transform = "translateY(0)";
                             }}>
                                 Initiate New Application
                             </Link>
@@ -387,67 +510,94 @@ function AdministratorDashboardUserApplicationStatus() {
                 {/* Existing Application Section */}
                 {isExistingApplication && (
                     <div style={{
-                        background: "rgba(255, 255, 255, 0.95)",
-                        borderRadius: "20px",
-                        padding: "40px",
-                        boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15)",
-                        backdropFilter: "blur(10px)"
+                        background: "rgba(255, 255, 255, 0.05)",
+                        backdropFilter: "blur(20px)",
+                        borderRadius: "30px",
+                        padding: "50px 40px",
+                        border: "1px solid rgba(255, 255, 255, 0.1)",
+                        boxShadow: "0 25px 50px rgba(0, 0, 0, 0.3)",
+                        animation: "slideInUp 0.6s ease-out"
                     }}>
                         <div style={{
                             display: "grid",
-                            gridTemplateColumns: "1fr 1fr",
-                            gap: "40px",
+                            gridTemplateColumns: "1fr 1.2fr",
+                            gap: "50px",
                             alignItems: "center"
                         }}>
-                            {/* Left Side - Image */}
+                            {/* Left Side - Visual */}
                             <div style={{
-                                textAlign: "center"
+                                textAlign: "center",
+                                position: "relative"
                             }}>
                                 <div style={{
-                                    background: "linear-gradient(45deg, #667eea, #764ba2)",
-                                    borderRadius: "20px",
-                                    padding: "30px",
-                                    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)"
+                                    background: "linear-gradient(135deg, rgba(86, 119, 252, 0.2), rgba(56, 182, 255, 0.2))",
+                                    borderRadius: "25px",
+                                    padding: "40px",
+                                    border: "1px solid rgba(255, 255, 255, 0.1)",
+                                    boxShadow: "0 20px 40px rgba(0, 0, 0, 0.2)",
+                                    position: "relative",
+                                    overflow: "hidden"
                                 }}>
                                     <img src={imageh} style={{
                                         width: "100%",
                                         borderRadius: "15px",
-                                        transform: "scale(1.05)"
+                                        transform: "scale(1.05)",
+                                        filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.3))"
                                     }} alt="Verification" />
+                                    <div style={{
+                                        position: "absolute",
+                                        top: "20px",
+                                        left: "20px",
+                                        background: "rgba(86, 119, 252, 0.9)",
+                                        color: "white",
+                                        padding: "10px 20px",
+                                        borderRadius: "25px",
+                                        fontWeight: "700",
+                                        fontSize: "0.9rem",
+                                        backdropFilter: "blur(10px)"
+                                    }}>
+                                        🔒 Secure Verification
+                                    </div>
                                 </div>
                             </div>
 
                             {/* Right Side - Form */}
                             <div>
                                 <h3 style={{
-                                    color: "#2d3748",
-                                    marginBottom: "10px",
-                                    fontSize: "1.8rem",
-                                    fontWeight: "600",
+                                    color: "white",
+                                    marginBottom: "15px",
+                                    fontSize: "2rem",
+                                    fontWeight: "700",
                                     textAlign: "center"
                                 }}>
                                     Check Application Status
                                 </h3>
                                 <p style={{
-                                    color: "#718096",
+                                    color: "rgba(255, 255, 255, 0.8)",
                                     textAlign: "center",
-                                    marginBottom: "30px"
+                                    marginBottom: "40px",
+                                    fontSize: "1.1rem",
+                                    fontWeight: "500"
                                 }}>
-                                    Enter your request ID to view your application details
+                                    Enter your request ID to view your application details and current status
                                 </p>
 
                                 <div style={{
                                     display: "grid",
-                                    gap: "20px"
+                                    gap: "25px"
                                 }}>
                                     <div>
                                         <label style={{
                                             display: "block",
-                                            marginBottom: "8px",
-                                            fontWeight: "600",
-                                            color: "#4a5568",
-                                            fontSize: "0.95rem"
+                                            marginBottom: "12px",
+                                            fontWeight: "700",
+                                            color: "rgba(255, 255, 255, 0.9)",
+                                            fontSize: "1rem",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            gap: "8px"
                                         }}>
+                                            <span>🔢</span>
                                             Request ID
                                         </label>
                                         <input
@@ -456,19 +606,23 @@ function AdministratorDashboardUserApplicationStatus() {
                                             onChange={handleUserRequestIDChange}
                                             style={{
                                                 width: "100%",
-                                                padding: "15px 20px",
-                                                border: "2px solid #e2e8f0",
-                                                borderRadius: "12px",
+                                                padding: "18px 20px",
+                                                border: "2px solid rgba(255, 255, 255, 0.1)",
+                                                borderRadius: "15px",
                                                 fontSize: "1rem",
                                                 transition: "all 0.3s ease",
-                                                background: "white"
+                                                background: "rgba(255, 255, 255, 0.05)",
+                                                color: "white",
+                                                fontWeight: "500"
                                             }}
                                             onFocus={(e) => {
-                                                e.target.style.borderColor = "#667eea";
-                                                e.target.style.boxShadow = "0 0 0 3px rgba(102, 126, 234, 0.1)";
+                                                e.target.style.borderColor = "#5677FC";
+                                                e.target.style.background = "rgba(255, 255, 255, 0.1)";
+                                                e.target.style.boxShadow = "0 0 0 4px rgba(86, 119, 252, 0.1)";
                                             }}
                                             onBlur={(e) => {
-                                                e.target.style.borderColor = "#e2e8f0";
+                                                e.target.style.borderColor = "rgba(255, 255, 255, 0.1)";
+                                                e.target.style.background = "rgba(255, 255, 255, 0.05)";
                                                 e.target.style.boxShadow = "none";
                                             }}
                                         />
@@ -477,11 +631,15 @@ function AdministratorDashboardUserApplicationStatus() {
                                     <div>
                                         <label style={{
                                             display: "block",
-                                            marginBottom: "8px",
-                                            fontWeight: "600",
-                                            color: "#4a5568",
-                                            fontSize: "0.95rem"
+                                            marginBottom: "12px",
+                                            fontWeight: "700",
+                                            color: "rgba(255, 255, 255, 0.9)",
+                                            fontSize: "1rem",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            gap: "8px"
                                         }}>
+                                            <span>👛</span>
                                             Connected Wallet Address
                                         </label>
                                         <input
@@ -489,20 +647,21 @@ function AdministratorDashboardUserApplicationStatus() {
                                             readOnly
                                             style={{
                                                 width: "100%",
-                                                padding: "15px 20px",
-                                                border: "2px solid #e2e8f0",
-                                                borderRadius: "12px",
+                                                padding: "18px 20px",
+                                                border: "2px solid rgba(255, 255, 255, 0.1)",
+                                                borderRadius: "15px",
                                                 fontSize: "0.9rem",
-                                                background: "#f7fafc",
-                                                color: "#718096"
+                                                background: "rgba(255, 255, 255, 0.03)",
+                                                color: "rgba(255, 255, 255, 0.7)",
+                                                fontWeight: "500"
                                             }}
                                         />
                                     </div>
 
                                     <div style={{
                                         display: "flex",
-                                        gap: "15px",
-                                        marginTop: "10px"
+                                        gap: "20px",
+                                        marginTop: "15px"
                                     }}>
                                         <button
                                             onClick={() => {
@@ -512,25 +671,26 @@ function AdministratorDashboardUserApplicationStatus() {
                                             style={{
                                                 flex: 1,
                                                 background: "transparent",
-                                                color: "#667eea",
-                                                border: "2px solid #667eea",
-                                                padding: "15px",
-                                                borderRadius: "10px",
+                                                color: "#38B6FF",
+                                                border: "2px solid rgba(86, 119, 252, 0.3)",
+                                                padding: "18px",
+                                                borderRadius: "12px",
                                                 fontSize: "1rem",
-                                                fontWeight: "600",
+                                                fontWeight: "700",
                                                 cursor: "pointer",
-                                                transition: "all 0.3s ease"
+                                                transition: "all 0.3s ease",
+                                                backdropFilter: "blur(10px)"
                                             }}
                                             onMouseEnter={(e) => {
-                                                e.target.style.background = "#667eea";
-                                                e.target.style.color = "white";
+                                                e.target.style.background = "rgba(86, 119, 252, 0.2)";
+                                                e.target.style.transform = "translateY(-2px)";
                                             }}
                                             onMouseLeave={(e) => {
                                                 e.target.style.background = "transparent";
-                                                e.target.style.color = "#667eea";
+                                                e.target.style.transform = "translateY(0)";
                                             }}
                                         >
-                                            Go Back
+                                            ← Go Back
                                         </button>
                                         <button
                                             onClick={() => {
@@ -543,26 +703,27 @@ function AdministratorDashboardUserApplicationStatus() {
                                             }}
                                             style={{
                                                 flex: 2,
-                                                background: "linear-gradient(45deg, #667eea, #764ba2)",
+                                                background: "linear-gradient(45deg, #5677FC, #38B6FF)",
                                                 color: "white",
                                                 border: "none",
-                                                padding: "15px",
-                                                borderRadius: "10px",
+                                                padding: "18px",
+                                                borderRadius: "12px",
                                                 fontSize: "1rem",
-                                                fontWeight: "600",
+                                                fontWeight: "700",
                                                 cursor: "pointer",
-                                                transition: "all 0.3s ease"
+                                                transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+                                                boxShadow: "0 10px 30px rgba(86, 119, 252, 0.4)"
                                             }}
                                             onMouseEnter={(e) => {
-                                                e.target.style.transform = "translateY(-2px)";
-                                                e.target.style.boxShadow = "0 5px 15px rgba(102, 126, 234, 0.4)";
+                                                e.target.style.transform = "translateY(-3px) scale(1.02)";
+                                                e.target.style.boxShadow = "0 15px 35px rgba(86, 119, 252, 0.5)";
                                             }}
                                             onMouseLeave={(e) => {
-                                                e.target.style.transform = "translateY(0)";
-                                                e.target.style.boxShadow = "none";
+                                                e.target.style.transform = "translateY(0) scale(1)";
+                                                e.target.style.boxShadow = "0 10px 30px rgba(86, 119, 252, 0.4)";
                                             }}
                                         >
-                                            View Application Status
+                                            🔍 View Application Status
                                         </button>
                                     </div>
                                 </div>
@@ -574,71 +735,98 @@ function AdministratorDashboardUserApplicationStatus() {
                 {/* Application Details Modal */}
                 <Modal show={showModal && passengerRequests.length > 0 && (accounts[0] == passengerRequests[userRequestID - 1].PassWalletAddress)} onHide={handleCloseModal} size="lg" centered backdrop="static">
                     <Modal.Header style={{
-                        background: "linear-gradient(45deg, #667eea, #764ba2)",
+                        background: "linear-gradient(45deg, #5677FC, #38B6FF)",
                         color: "white",
                         borderBottom: "none",
-                        borderRadius: "15px 15px 0 0"
+                        borderRadius: "20px 20px 0 0",
+                        padding: "30px"
                     }}>
                         <Modal.Title style={{
-                            fontWeight: "700",
-                            fontSize: "1.5rem"
+                            fontWeight: "800",
+                            fontSize: "1.8rem",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "12px"
                         }}>
                             📄 Application Details
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body style={{
-                        padding: "30px",
-                        background: "#f7fafc"
+                        padding: "40px",
+                        background: "linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%)"
                     }}>
                         <div style={{
                             background: "white",
-                            borderRadius: "15px",
-                            padding: "25px",
-                            marginBottom: "20px",
-                            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+                            borderRadius: "20px",
+                            padding: "35px",
+                            marginBottom: "25px",
+                            boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
+                            border: "1px solid #e2e8f0"
                         }}>
                             <h4 style={{
                                 color: "#2d3748",
-                                marginBottom: "20px",
-                                fontWeight: "600",
+                                marginBottom: "25px",
+                                fontWeight: "800",
                                 textAlign: "center",
-                                fontSize: "1.3rem"
+                                fontSize: "1.5rem",
+                                background: "linear-gradient(45deg, #5677FC, #38B6FF)",
+                                WebkitBackgroundClip: "text",
+                                WebkitTextFillColor: "transparent",
+                                backgroundClip: "text"
                             }}>
-                                Request ID: <span style={{ color: "#667eea" }}>{userRequestID}</span>
+                                Request ID: <span style={{ color: "#5677FC" }}>{userRequestID}</span>
                             </h4>
 
                             {/* Personal Details */}
-                            <div style={{ marginBottom: "25px" }}>
+                            <div style={{ marginBottom: "30px" }}>
                                 <h5 style={{
                                     color: "#2d3748",
-                                    marginBottom: "15px",
-                                    fontWeight: "600",
-                                    borderBottom: "2px solid #e2e8f0",
-                                    paddingBottom: "8px"
+                                    marginBottom: "20px",
+                                    fontWeight: "700",
+                                    borderBottom: "3px solid #e2e8f0",
+                                    paddingBottom: "12px",
+                                    fontSize: "1.3rem",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "10px"
                                 }}>
                                     👤 Personal Information
                                 </h5>
                                 <div style={{
                                     display: "grid",
-                                    gap: "12px"
+                                    gap: "15px"
                                 }}>
                                     {[
-                                        { label: "Full Name", value: userDetails[1] },
-                                        { label: "Email Address", value: userDetails[7] },
-                                        { label: "Wallet Address", value: userDetails[2] },
-                                        { label: "Home Address", value: userDetails[3] },
-                                        { label: "Gender", value: userDetails[5] }
+                                        { label: "Full Name", value: userDetails[1], icon: "👤" },
+                                        { label: "Email Address", value: userDetails[7], icon: "📧" },
+                                        { label: "Wallet Address", value: userDetails[2], icon: "👛" },
+                                        { label: "Home Address", value: userDetails[3], icon: "🏠" },
+                                        { label: "Gender", value: userDetails[5], icon: "⚧️" }
                                     ].map((item, index) => (
                                         <div key={index} style={{
                                             display: "flex",
                                             justifyContent: "space-between",
                                             alignItems: "center",
-                                            padding: "10px",
+                                            padding: "15px",
                                             background: "#f7fafc",
-                                            borderRadius: "8px"
-                                        }}>
-                                            <span style={{ fontWeight: "600", color: "#4a5568" }}>{item.label}:</span>
-                                            <span style={{ color: "#2d3748", fontWeight: "500" }}>{item.value || "Not provided"}</span>
+                                            borderRadius: "12px",
+                                            border: "1px solid #e2e8f0",
+                                            transition: "all 0.3s ease"
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.background = "#edf2f7";
+                                            e.currentTarget.style.transform = "translateX(5px)";
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.background = "#f7fafc";
+                                            e.currentTarget.style.transform = "translateX(0)";
+                                        }}
+                                        >
+                                            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                                                <span style={{ fontSize: "1.2rem" }}>{item.icon}</span>
+                                                <span style={{ fontWeight: "700", color: "#4a5568" }}>{item.label}:</span>
+                                            </div>
+                                            <span style={{ color: "#2d3748", fontWeight: "600", fontSize: "1rem" }}>{item.value || "Not provided"}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -646,52 +834,62 @@ function AdministratorDashboardUserApplicationStatus() {
 
                             {/* Vehicle Details */}
                             {!(userDetails[4] == " ") && (
-                                <div style={{ marginBottom: "25px" }}>
+                                <div style={{ marginBottom: "30px" }}>
                                     <h5 style={{
                                         color: "#2d3748",
-                                        marginBottom: "15px",
-                                        fontWeight: "600",
-                                        borderBottom: "2px solid #e2e8f0",
-                                        paddingBottom: "8px"
+                                        marginBottom: "20px",
+                                        fontWeight: "700",
+                                        borderBottom: "3px solid #e2e8f0",
+                                        paddingBottom: "12px",
+                                        fontSize: "1.3rem",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        gap: "10px"
                                     }}>
                                         🚗 Vehicle Information
                                     </h5>
                                     <div style={{
                                         display: "grid",
                                         gridTemplateColumns: "1fr 1fr 1fr",
-                                        gap: "15px",
+                                        gap: "20px",
                                         textAlign: "center"
                                     }}>
                                         <div style={{
-                                            padding: "15px",
-                                            background: "linear-gradient(45deg, #667eea, #764ba2)",
+                                            padding: "20px",
+                                            background: "linear-gradient(45deg, #5677FC, #38B6FF)",
                                             color: "white",
-                                            borderRadius: "10px",
-                                            fontWeight: "600"
+                                            borderRadius: "12px",
+                                            fontWeight: "700",
+                                            fontSize: "1rem",
+                                            boxShadow: "0 8px 20px rgba(86, 119, 252, 0.3)"
                                         }}>
                                             Vehicle Type
                                         </div>
                                         <div style={{
-                                            padding: "15px",
-                                            background: "linear-gradient(45deg, #667eea, #764ba2)",
+                                            padding: "20px",
+                                            background: "linear-gradient(45deg, #5677FC, #38B6FF)",
                                             color: "white",
-                                            borderRadius: "10px",
-                                            fontWeight: "600"
+                                            borderRadius: "12px",
+                                            fontWeight: "700",
+                                            fontSize: "1rem",
+                                            boxShadow: "0 8px 20px rgba(86, 119, 252, 0.3)"
                                         }}>
                                             License Plate
                                         </div>
                                         <div style={{
-                                            padding: "15px",
-                                            background: "linear-gradient(45deg, #667eea, #764ba2)",
+                                            padding: "20px",
+                                            background: "linear-gradient(45deg, #5677FC, #38B6FF)",
                                             color: "white",
-                                            borderRadius: "10px",
-                                            fontWeight: "600"
+                                            borderRadius: "12px",
+                                            fontWeight: "700",
+                                            fontSize: "1rem",
+                                            boxShadow: "0 8px 20px rgba(86, 119, 252, 0.3)"
                                         }}>
                                             Documents
                                         </div>
-                                        <div style={{ padding: "10px" }}>{userDetails[8]}</div>
-                                        <div style={{ padding: "10px" }}>{userDetails[9]}</div>
-                                        <div style={{ padding: "10px" }}>
+                                        <div style={{ padding: "15px", fontWeight: "600", color: "#2d3748", fontSize: "1.1rem" }}>{userDetails[8]}</div>
+                                        <div style={{ padding: "15px", fontWeight: "600", color: "#2d3748", fontSize: "1.1rem" }}>{userDetails[9]}</div>
+                                        <div style={{ padding: "15px" }}>
                                             <button
                                                 disabled={!(userDetails[4])}
                                                 onClick={(event) => {
@@ -706,24 +904,27 @@ function AdministratorDashboardUserApplicationStatus() {
                                                 }}
                                                 style={{
                                                     background: "transparent",
-                                                    color: "#667eea",
-                                                    border: "2px solid #667eea",
-                                                    padding: "8px 15px",
-                                                    borderRadius: "6px",
-                                                    fontWeight: "600",
+                                                    color: "#5677FC",
+                                                    border: "2px solid #5677FC",
+                                                    padding: "12px 20px",
+                                                    borderRadius: "10px",
+                                                    fontWeight: "700",
                                                     cursor: "pointer",
-                                                    transition: "all 0.3s ease"
+                                                    transition: "all 0.3s ease",
+                                                    fontSize: "0.95rem"
                                                 }}
                                                 onMouseEnter={(e) => {
-                                                    e.target.style.background = "#667eea";
+                                                    e.target.style.background = "#5677FC";
                                                     e.target.style.color = "white";
+                                                    e.target.style.transform = "translateY(-2px)";
                                                 }}
                                                 onMouseLeave={(e) => {
                                                     e.target.style.background = "transparent";
-                                                    e.target.style.color = "#667eea";
+                                                    e.target.style.color = "#5677FC";
+                                                    e.target.style.transform = "translateY(0)";
                                                 }}
                                             >
-                                                View Papers
+                                                📄 View Papers
                                             </button>
                                         </div>
                                     </div>
@@ -734,56 +935,64 @@ function AdministratorDashboardUserApplicationStatus() {
                             <div style={{ marginBottom: "25px" }}>
                                 <h5 style={{
                                     color: "#2d3748",
-                                    marginBottom: "15px",
-                                    fontWeight: "600",
-                                    borderBottom: "2px solid #e2e8f0",
-                                    paddingBottom: "8px"
+                                    marginBottom: "20px",
+                                    fontWeight: "700",
+                                    borderBottom: "3px solid #e2e8f0",
+                                    paddingBottom: "12px",
+                                    fontSize: "1.3rem",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "10px"
                                 }}>
                                     📊 Application Status
                                 </h5>
                                 <div style={{
                                     display: "flex",
                                     alignItems: "center",
-                                    gap: "20px"
+                                    gap: "25px"
                                 }}>
-                                    <span style={{ fontWeight: "600", color: "#4a5568" }}>Status:</span>
+                                    <span style={{ fontWeight: "700", color: "#4a5568", fontSize: "1.1rem" }}>Status:</span>
                                     {userDetails[6] == 1 && (
                                         <div style={{
-                                            background: "#c6f6d5",
-                                            color: "#22543d",
-                                            padding: "10px 20px",
-                                            borderRadius: "25px",
-                                            fontWeight: "700",
-                                            fontSize: "1rem",
-                                            border: "2px solid #48bb78"
+                                            background: "linear-gradient(45deg, #48bb78, #38a169)",
+                                            color: "white",
+                                            padding: "15px 30px",
+                                            borderRadius: "30px",
+                                            fontWeight: "800",
+                                            fontSize: "1.1rem",
+                                            border: "none",
+                                            boxShadow: "0 8px 20px rgba(72, 187, 120, 0.4)",
+                                            animation: "pulse 2s infinite"
                                         }}>
                                             ✅ APPROVED
                                         </div>
                                     )}
                                     {userDetails[6] == 2 && (
                                         <div style={{
-                                            background: "#fed7d7",
-                                            color: "#742a2a",
-                                            padding: "10px 20px",
-                                            borderRadius: "25px",
-                                            fontWeight: "700",
-                                            fontSize: "1rem",
-                                            border: "2px solid #f56565"
+                                            background: "linear-gradient(45deg, #e53e3e, #c53030)",
+                                            color: "white",
+                                            padding: "15px 30px",
+                                            borderRadius: "30px",
+                                            fontWeight: "800",
+                                            fontSize: "1.1rem",
+                                            border: "none",
+                                            boxShadow: "0 8px 20px rgba(229, 62, 62, 0.4)"
                                         }}>
                                             ❌ REJECTED
                                         </div>
                                     )}
                                     {userDetails[6] == 0 && (
                                         <div style={{
-                                            background: "#e2e8f0",
-                                            color: "#2d3748",
-                                            padding: "10px 20px",
-                                            borderRadius: "25px",
-                                            fontWeight: "700",
-                                            fontSize: "1rem",
-                                            border: "2px solid #a0aec0"
+                                            background: "linear-gradient(45deg, #a0aec0, #718096)",
+                                            color: "white",
+                                            padding: "15px 30px",
+                                            borderRadius: "30px",
+                                            fontWeight: "800",
+                                            fontSize: "1.1rem",
+                                            border: "none",
+                                            boxShadow: "0 8px 20px rgba(160, 174, 192, 0.4)"
                                         }}>
-                                            ⏳ PENDING
+                                            ⏳ PENDING REVIEW
                                         </div>
                                     )}
                                 </div>
@@ -792,26 +1001,34 @@ function AdministratorDashboardUserApplicationStatus() {
                             {/* Passenger ID Section */}
                             {userDetails[6] == 1 && (
                                 <div style={{
-                                    background: "linear-gradient(45deg, #c6f6d5, #48bb78)",
-                                    padding: "20px",
-                                    borderRadius: "15px",
+                                    background: "linear-gradient(135deg, #c6f6d5, #9ae6b4)",
+                                    padding: "30px",
+                                    borderRadius: "20px",
                                     textAlign: "center",
-                                    marginTop: "20px"
+                                    marginTop: "25px",
+                                    border: "2px solid #68d391",
+                                    boxShadow: "0 10px 30px rgba(104, 211, 145, 0.3)"
                                 }}>
                                     <h6 style={{
                                         color: "#22543d",
-                                        marginBottom: "15px",
-                                        fontWeight: "600",
-                                        fontSize: "1.1rem"
+                                        marginBottom: "20px",
+                                        fontWeight: "800",
+                                        fontSize: "1.4rem",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        gap: "10px"
                                     }}>
-                                        🎉 Congratulations! Your application has been approved.
+                                        🎉 Congratulations!
                                     </h6>
                                     <p style={{
                                         color: "#22543d",
-                                        marginBottom: "15px",
-                                        fontSize: "0.95rem"
+                                        marginBottom: "20px",
+                                        fontSize: "1.1rem",
+                                        fontWeight: "600",
+                                        lineHeight: "1.6"
                                     }}>
-                                        Click below to reveal your Passenger ID for CARPOOLING DAPP
+                                        Your application has been approved. Welcome to our carpooling community!
                                     </p>
                                     {revealedPassID == "" && (
                                         <button
@@ -820,45 +1037,50 @@ function AdministratorDashboardUserApplicationStatus() {
                                                 background: "#22543d",
                                                 color: "white",
                                                 border: "none",
-                                                padding: "12px 25px",
-                                                borderRadius: "8px",
-                                                fontWeight: "600",
+                                                padding: "15px 35px",
+                                                borderRadius: "12px",
+                                                fontWeight: "700",
                                                 cursor: "pointer",
-                                                transition: "all 0.3s ease"
+                                                transition: "all 0.3s ease",
+                                                fontSize: "1.1rem",
+                                                boxShadow: "0 8px 20px rgba(34, 84, 61, 0.4)"
                                             }}
                                             onMouseEnter={(e) => {
-                                                e.target.style.transform = "translateY(-2px)";
-                                                e.target.style.boxShadow = "0 5px 15px rgba(34, 84, 61, 0.4)";
+                                                e.target.style.transform = "translateY(-3px)";
+                                                e.target.style.boxShadow = "0 12px 25px rgba(34, 84, 61, 0.5)";
                                             }}
                                             onMouseLeave={(e) => {
                                                 e.target.style.transform = "translateY(0)";
-                                                e.target.style.boxShadow = "none";
+                                                e.target.style.boxShadow = "0 8px 20px rgba(34, 84, 61, 0.4)";
                                             }}
                                         >
-                                            Reveal Passenger ID
+                                            🔓 Reveal Passenger ID
                                         </button>
                                     )}
                                     {!(revealedPassID == "") && (
                                         <div style={{
                                             background: "white",
-                                            padding: "15px",
-                                            borderRadius: "10px",
-                                            marginTop: "10px"
+                                            padding: "25px",
+                                            borderRadius: "15px",
+                                            marginTop: "15px",
+                                            border: "2px solid #48bb78",
+                                            boxShadow: "0 8px 20px rgba(72, 187, 120, 0.3)"
                                         }}>
                                             <h5 style={{
                                                 color: "#22543d",
-                                                fontSize: "1.3rem",
-                                                fontWeight: "700",
-                                                margin: 0
+                                                fontSize: "1.5rem",
+                                                fontWeight: "800",
+                                                margin: "0 0 10px 0"
                                             }}>
-                                                Passenger ID: {revealedPassID}
+                                                Passenger ID: <span style={{ color: "#5677FC" }}>{revealedPassID}</span>
                                             </h5>
                                             <p style={{
                                                 color: "#4a5568",
-                                                fontSize: "0.9rem",
-                                                margin: "10px 0 0 0"
+                                                fontSize: "1rem",
+                                                margin: "15px 0 0 0",
+                                                fontWeight: "600"
                                             }}>
-                                                Save this ID for future identification on our platform
+                                                🎯 Save this ID for future identification on our platform
                                             </p>
                                         </div>
                                     )}
@@ -868,36 +1090,87 @@ function AdministratorDashboardUserApplicationStatus() {
                     </Modal.Body>
                     <Modal.Footer style={{
                         borderTop: "none",
-                        background: "#f7fafc",
-                        borderRadius: "0 0 15px 15px",
-                        justifyContent: "center"
+                        background: "linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%)",
+                        borderRadius: "0 0 20px 20px",
+                        justifyContent: "center",
+                        padding: "30px"
                     }}>
                         <button
                             onClick={handleCloseModal}
                             style={{
-                                background: "linear-gradient(45deg, #667eea, #764ba2)",
+                                background: "linear-gradient(45deg, #5677FC, #38B6FF)",
                                 color: "white",
                                 border: "none",
-                                padding: "12px 30px",
-                                borderRadius: "8px",
-                                fontWeight: "600",
+                                padding: "15px 35px",
+                                borderRadius: "12px",
+                                fontWeight: "700",
                                 cursor: "pointer",
-                                transition: "all 0.3s ease"
+                                transition: "all 0.3s ease",
+                                fontSize: "1.1rem",
+                                boxShadow: "0 8px 20px rgba(86, 119, 252, 0.4)"
                             }}
                             onMouseEnter={(e) => {
                                 e.target.style.transform = "translateY(-2px)";
-                                e.target.style.boxShadow = "0 5px 15px rgba(102, 126, 234, 0.4)";
+                                e.target.style.boxShadow = "0 12px 25px rgba(86, 119, 252, 0.5)";
                             }}
                             onMouseLeave={(e) => {
                                 e.target.style.transform = "translateY(0)";
-                                e.target.style.boxShadow = "none";
+                                e.target.style.boxShadow = "0 8px 20px rgba(86, 119, 252, 0.4)";
                             }}
                         >
-                            Close
+                            Close Panel
                         </button>
                     </Modal.Footer>
                 </Modal>
             </div>
+
+            <style jsx>{`
+                @keyframes float {
+                    0%, 100% {
+                        transform: translateY(0px) rotate(0deg);
+                    }
+                    50% {
+                        transform: translateY(-20px) rotate(2deg);
+                    }
+                }
+                
+                @keyframes floatParticle {
+                    0% {
+                        transform: translateY(100vh) rotate(0deg);
+                        opacity: 0;
+                    }
+                    10% {
+                        opacity: 1;
+                    }
+                    90% {
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translateY(-100px) rotate(360deg);
+                        opacity: 0;
+                    }
+                }
+                
+                @keyframes pulse {
+                    0%, 100% {
+                        transform: scale(1);
+                    }
+                    50% {
+                        transform: scale(1.05);
+                    }
+                }
+                
+                @keyframes slideInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(30px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            `}</style>
         </div>
     );
 }

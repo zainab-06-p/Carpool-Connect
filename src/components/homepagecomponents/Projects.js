@@ -47,20 +47,51 @@ const Projects = () => {
 
   return (
     <section style={{ 
-      background: "linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)",
-      padding: '100px 0',
+      background: "linear-gradient(135deg, #0a0a2a 0%, #1a1a4a 50%, #0f0c29 100%)",
+      padding: '120px 0',
       position: 'relative',
       overflow: 'hidden'
     }}>
+      {/* Animated Background Elements */}
       <div style={{
         position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: "radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%)",
-        zIndex: 1
+        top: "10%",
+        right: "5%",
+        width: "400px",
+        height: "400px",
+        background: "radial-gradient(circle, rgba(86, 119, 252, 0.1) 0%, transparent 70%)",
+        borderRadius: "50%",
+        animation: "pulse 8s ease-in-out infinite",
+        filter: "blur(40px)"
       }}></div>
+      
+      <div style={{
+        position: "absolute",
+        bottom: "20%",
+        left: "8%",
+        width: "300px",
+        height: "300px",
+        background: "radial-gradient(circle, rgba(56, 182, 255, 0.08) 0%, transparent 70%)",
+        borderRadius: "50%",
+        animation: "pulse 6s ease-in-out infinite reverse",
+        filter: "blur(30px)"
+      }}></div>
+
+      {/* Floating Particles */}
+      {[...Array(12)].map((_, i) => (
+        <div key={i} style={{
+          position: "absolute",
+          width: `${Math.random() * 8 + 2}px`,
+          height: `${Math.random() * 8 + 2}px`,
+          background: "rgba(86, 119, 252, 0.4)",
+          borderRadius: "50%",
+          top: `${Math.random() * 100}%`,
+          left: `${Math.random() * 100}%`,
+          animation: `floatParticle ${Math.random() * 15 + 10}s linear infinite`,
+          animationDelay: `${Math.random() * 5}s`,
+          filter: 'blur(1px)'
+        }}></div>
+      ))}
       
       <Container style={{ position: 'relative', zIndex: 2 }}>
         <Row>
@@ -69,50 +100,57 @@ const Projects = () => {
               {({ isVisible }) =>
                 <div className={isVisible ? "animate__animated animate__fadeIn" : ""} style={{ textAlign: 'center' }}>
                   <div style={{
-                    background: "rgba(255, 255, 255, 0.1)",
+                    background: "linear-gradient(90deg, rgba(86, 119, 252, 0.2) 0%, rgba(56, 182, 255, 0.2) 100%)",
                     backdropFilter: "blur(10px)",
                     color: "#fff",
-                    padding: '12px 30px',
+                    padding: '14px 32px',
                     borderRadius: '50px',
                     fontSize: '1.1rem',
-                    fontWeight: '600',
+                    fontWeight: '700',
                     display: 'inline-block',
-                    marginBottom: '20px',
-                    border: '1px solid rgba(255, 255, 255, 0.2)'
+                    marginBottom: '25px',
+                    border: '1px solid rgba(255, 255, 255, 0.15)',
+                    boxShadow: '0 8px 32px rgba(31, 38, 135, 0.2)'
                   }}>
-                    🚀 Our Premium Services
+                    🚀 Premium Carpooling Services
                   </div>
                   
                   <h2 style={{ 
                     color: 'white', 
                     fontWeight: '800', 
-                    marginBottom: '50px',
-                    fontSize: '3rem',
-                    textShadow: '0 4px 8px rgba(0, 0, 0, 0.3)'
+                    marginBottom: '60px',
+                    fontSize: '3.5rem',
+                    textShadow: '0 4px 12px rgba(0, 0, 0, 0.4)',
+                    background: 'linear-gradient(45deg, #38B6FF, #5677FC)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text'
                   }}>
                     Why Choose Carpool Connect?
                   </h2>
                   
                   <Tab.Container id="projects-tabs" defaultActiveKey="first">
                     <Nav variant="pills" className="justify-content-center" style={{ 
-                      marginBottom: '50px',
-                      background: 'rgba(255, 255, 255, 0.1)',
-                      backdropFilter: 'blur(10px)',
+                      marginBottom: '60px',
+                      background: 'rgba(255, 255, 255, 0.08)',
+                      backdropFilter: 'blur(15px)',
                       borderRadius: '50px',
-                      padding: '8px',
+                      padding: '10px',
                       border: '1px solid rgba(255, 255, 255, 0.1)',
-                      display: 'inline-flex'
+                      display: 'inline-flex',
+                      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)'
                     }}>
                       <Nav.Item>
                         <Nav.Link 
                           eventKey="first" 
                           style={{ 
-                            color: '#ffffff', 
-                            fontWeight: '600',
-                            padding: '12px 30px',
+                            color: 'rgba(255, 255, 255, 0.8)', 
+                            fontWeight: '700',
+                            padding: '14px 35px',
                             borderRadius: '40px',
-                            margin: '0 5px',
-                            transition: 'all 0.3s ease'
+                            margin: '0 8px',
+                            transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                            border: '1px solid transparent'
                           }}
                           className="nav-link-custom"
                         >
@@ -123,12 +161,13 @@ const Projects = () => {
                         <Nav.Link 
                           eventKey="second" 
                           style={{ 
-                            color: '#ffffff', 
-                            fontWeight: '600',
-                            padding: '12px 30px',
+                            color: 'rgba(255, 255, 255, 0.8)', 
+                            fontWeight: '700',
+                            padding: '14px 35px',
                             borderRadius: '40px',
-                            margin: '0 5px',
-                            transition: 'all 0.3s ease'
+                            margin: '0 8px',
+                            transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                            border: '1px solid transparent'
                           }}
                           className="nav-link-custom"
                         >
@@ -139,12 +178,13 @@ const Projects = () => {
                         <Nav.Link 
                           eventKey="third" 
                           style={{ 
-                            color: '#ffffff', 
-                            fontWeight: '600',
-                            padding: '12px 30px',
+                            color: 'rgba(255, 255, 255, 0.8)', 
+                            fontWeight: '700',
+                            padding: '14px 35px',
                             borderRadius: '40px',
-                            margin: '0 5px',
-                            transition: 'all 0.3s ease'
+                            margin: '0 8px',
+                            transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                            border: '1px solid transparent'
                           }}
                           className="nav-link-custom"
                         >
@@ -165,19 +205,21 @@ const Projects = () => {
                       <Tab.Pane eventKey="second">
                         <div style={{
                           background: 'rgba(255, 255, 255, 0.05)',
-                          backdropFilter: 'blur(10px)',
-                          borderRadius: '20px',
-                          padding: '30px',
-                          marginBottom: '40px',
-                          border: '1px solid rgba(255, 255, 255, 0.1)'
+                          backdropFilter: 'blur(15px)',
+                          borderRadius: '25px',
+                          padding: '35px',
+                          marginBottom: '50px',
+                          border: '1px solid rgba(255, 255, 255, 0.1)',
+                          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)'
                         }}>
                           <p style={{
-                            color: 'rgba(255, 255, 255, 0.9)',
-                            fontSize: '1.2rem',
+                            color: 'rgba(255, 255, 255, 0.95)',
+                            fontSize: '1.3rem',
                             margin: 0,
-                            fontWeight: '500'
+                            fontWeight: '600',
+                            textAlign: 'center'
                           }}>
-                            Wide range of vehicles, suited for everyone, everyday.
+                            🚙 Wide range of premium vehicles, perfectly suited for everyone's daily commute needs.
                           </p>
                         </div>
                         <Row>
@@ -190,42 +232,70 @@ const Projects = () => {
                       <Tab.Pane eventKey="third">
                         <div style={{
                           background: 'rgba(255, 255, 255, 0.05)',
-                          backdropFilter: 'blur(10px)',
-                          borderRadius: '20px',
-                          padding: '40px',
+                          backdropFilter: 'blur(15px)',
+                          borderRadius: '25px',
+                          padding: '45px',
                           border: '1px solid rgba(255, 255, 255, 0.1)',
-                          textAlign: 'left'
+                          textAlign: 'left',
+                          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)'
                         }}>
                           <p style={{
-                            color: 'rgba(255, 255, 255, 0.9)',
-                            fontSize: '1.1rem',
+                            color: 'rgba(255, 255, 255, 0.95)',
+                            fontSize: '1.2rem',
                             lineHeight: '1.8',
-                            margin: 0
+                            margin: '0 0 35px 0',
+                            fontWeight: '500'
                           }}>
-                            As a member of our carpooling network, you'll have access to an extensive network of verified drivers and passengers. 
-                            Say goodbye to long commutes and hello to a more efficient and eco-friendly way of traveling. Our advanced matching 
-                            algorithm intelligently connects you with compatible carpool partners, ensuring a seamless and comfortable ride every time.
+                            As a member of our advanced carpooling network, you'll have exclusive access to an extensive network of verified drivers and passengers. 
+                            Say goodbye to stressful commutes and welcome a more efficient, eco-friendly way of traveling. Our intelligent matching 
+                            algorithm connects you with perfectly compatible carpool partners, ensuring a seamless and comfortable ride experience every time.
                           </p>
                           
                           <div style={{
                             display: 'grid',
-                            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                            gap: '20px',
-                            marginTop: '30px'
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                            gap: '25px',
+                            marginTop: '35px'
                           }}>
-                            {['🚀 Quick Matching', '🔒 Secure Payments', '🌱 Eco-Friendly', '💰 Cost Saving'].map((benefit, index) => (
+                            {[
+                              { icon: '🚀', text: 'Quick Matching' },
+                              { icon: '🔒', text: 'Secure Payments' },
+                              { icon: '🌱', text: 'Eco-Friendly' },
+                              { icon: '💰', text: 'Cost Saving' },
+                              { icon: '⭐', text: 'Premium Service' },
+                              { icon: '⚡', text: 'Fast Support' }
+                            ].map((benefit, index) => (
                               <div key={index} style={{
-                                background: 'rgba(102, 126, 234, 0.1)',
-                                padding: '15px',
-                                borderRadius: '12px',
+                                background: 'linear-gradient(135deg, rgba(86, 119, 252, 0.15), rgba(56, 182, 255, 0.15))',
+                                padding: '20px 15px',
+                                borderRadius: '15px',
                                 textAlign: 'center',
-                                border: '1px solid rgba(102, 126, 234, 0.2)'
-                              }}>
+                                border: '1px solid rgba(86, 119, 252, 0.2)',
+                                transition: 'all 0.3s ease',
+                                backdropFilter: 'blur(5px)'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.transform = 'translateY(-5px)';
+                                e.currentTarget.style.background = 'linear-gradient(135deg, rgba(86, 119, 252, 0.25), rgba(56, 182, 255, 0.25))';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.transform = 'translateY(0)';
+                                e.currentTarget.style.background = 'linear-gradient(135deg, rgba(86, 119, 252, 0.15), rgba(56, 182, 255, 0.15))';
+                              }}
+                              >
+                                <div style={{
+                                  fontSize: '2rem',
+                                  marginBottom: '12px',
+                                  filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))'
+                                }}>
+                                  {benefit.icon}
+                                </div>
                                 <span style={{
                                   color: '#fff',
-                                  fontWeight: '600'
+                                  fontWeight: '700',
+                                  fontSize: '1rem'
                                 }}>
-                                  {benefit}
+                                  {benefit.text}
                                 </span>
                               </div>
                             ))}
@@ -243,9 +313,39 @@ const Projects = () => {
 
       <style jsx>{`
         .nav-link-custom.active {
-          background: linear-gradient(45deg, #667eea, #764ba2) !important;
+          background: linear-gradient(45deg, #5677FC, #38B6FF) !important;
           color: white !important;
-          box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+          box-shadow: 0 8px 25px rgba(86, 119, 252, 0.4) !important;
+          border: 1px solid rgba(255, 255, 255, 0.2) !important;
+          transform: scale(1.05);
+        }
+        
+        @keyframes pulse {
+          0%, 100% {
+            transform: scale(1);
+            opacity: 0.7;
+          }
+          50% {
+            transform: scale(1.1);
+            opacity: 0.9;
+          }
+        }
+        
+        @keyframes floatParticle {
+          0% {
+            transform: translateY(100vh) rotate(0deg);
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          90% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-100px) rotate(360deg);
+            opacity: 0;
+          }
         }
       `}</style>
     </section>

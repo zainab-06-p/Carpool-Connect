@@ -169,12 +169,11 @@ function AdministratorDashboardUserRegistration() {
         from: accounts[0]
       });
 
-      // Call the contract method
       const result = await contract.methods
         .CreatePassengerRequest(
           name, 
           homeAddress, 
-          " ", // vehicleDetailsHash (empty for now)
+          " ", 
           gender, 
           email, 
           isChoosingVehicle ? vehicleName : " ", 
@@ -184,7 +183,6 @@ function AdministratorDashboardUserRegistration() {
       
       console.log('Transaction successful:', result);
       
-      // Reload passenger requests to get the updated list
       await loadPassengerRequests(contract);
       setShowRequestMadeModal(true);
       
@@ -207,7 +205,6 @@ function AdministratorDashboardUserRegistration() {
   const handleSubmitApplication = async () => {
     console.log('Submit button clicked');
     
-    // Validate required fields
     if (!name || !homeAddress || !email || !gender) {
       alert('Please fill in all required fields before submitting.');
       return;
@@ -236,54 +233,135 @@ function AdministratorDashboardUserRegistration() {
     }
   };
 
-  // Add this function to handle name updates properly
   const handleNameUpdate = async () => {
-    // Since you're using a single name field now, this might not be needed
-    // But keeping it for compatibility
     console.log('Name updated:', name);
     return Promise.resolve();
   };
 
   return (
     <div className="signup-container" style={{ 
-      background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      background: "linear-gradient(135deg, #0a0a2a 0%, #1a1a4a 50%, #0f0c29 100%)",
       minHeight: "100vh",
-      padding: "20px",
-      fontFamily: "'Inter', sans-serif"
+      padding: "0",
+      fontFamily: "'Inter', sans-serif",
+      position: "relative",
+      overflow: "hidden"
     }}>
+      
+      {/* Animated Background Elements */}
+      <div style={{
+        position: "absolute",
+        top: "10%",
+        left: "5%",
+        width: "300px",
+        height: "300px",
+        background: "radial-gradient(circle, rgba(86, 119, 252, 0.15) 0%, transparent 70%)",
+        borderRadius: "50%",
+        animation: "float 8s ease-in-out infinite",
+        filter: "blur(40px)"
+      }}></div>
+      
+      <div style={{
+        position: "absolute",
+        bottom: "15%",
+        right: "10%",
+        width: "250px",
+        height: "250px",
+        background: "radial-gradient(circle, rgba(56, 182, 255, 0.1) 0%, transparent 70%)",
+        borderRadius: "50%",
+        animation: "float 6s ease-in-out infinite reverse",
+        filter: "blur(30px)"
+      }}></div>
+
+      {/* Floating Particles */}
+      {[...Array(20)].map((_, i) => (
+        <div key={i} style={{
+          position: "absolute",
+          width: `${Math.random() * 6 + 2}px`,
+          height: `${Math.random() * 6 + 2}px`,
+          background: "rgba(86, 119, 252, 0.6)",
+          borderRadius: "50%",
+          top: `${Math.random() * 100}%`,
+          left: `${Math.random() * 100}%`,
+          animation: `floatParticle ${Math.random() * 15 + 10}s linear infinite`,
+          animationDelay: `${Math.random() * 5}s`,
+          filter: 'blur(1px)'
+        }}></div>
+      ))}
+
       {/* Header */}
       <header style={{
-        background: "rgba(255, 255, 255, 0.95)",
-        backdropFilter: "blur(10px)",
-        borderRadius: "20px",
-        padding: "20px 40px",
-        marginBottom: "30px",
-        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)"
+        background: "rgba(10, 10, 42, 0.8)",
+        backdropFilter: "blur(15px)",
+        padding: "20px 0",
+        borderBottom: "1px solid rgba(86, 119, 252, 0.2)",
+        position: "sticky",
+        top: 0,
+        zIndex: 1000
       }}>
         <div style={{
+          maxWidth: "1400px",
+          margin: "0 auto",
+          padding: "0 40px",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center"
         }}>
-          <h1 style={{
-            margin: 0,
-            background: "linear-gradient(45deg, #667eea, #764ba2)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            fontSize: "2.5rem",
-            fontWeight: "800"
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "15px"
           }}>
-            CARPOOL CONNECT
-          </h1>
+            <div style={{
+              width: "50px",
+              height: "50px",
+              background: "linear-gradient(45deg, #5677FC, #38B6FF)",
+              borderRadius: "12px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "1.5rem",
+              fontWeight: "bold",
+              color: "white",
+              boxShadow: "0 8px 25px rgba(86, 119, 252, 0.4)"
+            }}>
+              🚗
+            </div>
+            <h1 style={{
+              margin: 0,
+              background: "linear-gradient(45deg, #38B6FF, #5677FC)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              fontSize: "2.2rem",
+              fontWeight: "800"
+            }}>
+              CARPOOL CONNECT
+            </h1>
+          </div>
+          
           <a href="/" style={{
             textDecoration: "none",
-            color: "#667eea",
-            fontWeight: "600",
-            padding: "10px 20px",
-            border: "2px solid #667eea",
-            borderRadius: "10px",
-            transition: "all 0.3s ease"
-          }}>
+            color: "#38B6FF",
+            fontWeight: "700",
+            padding: "12px 25px",
+            border: "2px solid rgba(86, 119, 252, 0.3)",
+            borderRadius: "12px",
+            transition: "all 0.3s ease",
+            background: "rgba(255, 255, 255, 0.05)",
+            backdropFilter: "blur(10px)"
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.background = "rgba(86, 119, 252, 0.2)";
+            e.target.style.borderColor = "#5677FC";
+            e.target.style.transform = "translateY(-2px)";
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.background = "rgba(255, 255, 255, 0.05)";
+            e.target.style.borderColor = "rgba(86, 119, 252, 0.3)";
+            e.target.style.transform = "translateY(0)";
+          }}
+          >
             ← Back to Home
           </a>
         </div>
@@ -291,94 +369,269 @@ function AdministratorDashboardUserRegistration() {
 
       {/* Main Content */}
       <div style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 400px",
-        gap: "30px",
         maxWidth: "1400px",
-        margin: "0 auto"
+        margin: "40px auto",
+        padding: "0 40px",
+        display: "grid",
+        gridTemplateColumns: "1fr 1.2fr",
+        gap: "40px",
+        alignItems: "start"
       }}>
         
-        {/* Left Side - Form */}
+        {/* Left Side - Visual & Info */}
+        <div style={{
+          background: "rgba(255, 255, 255, 0.05)",
+          backdropFilter: "blur(20px)",
+          borderRadius: "30px",
+          padding: "50px 40px",
+          border: "1px solid rgba(255, 255, 255, 0.1)",
+          boxShadow: "0 25px 50px rgba(0, 0, 0, 0.3)",
+          height: "fit-content",
+          position: "sticky",
+          top: "120px"
+        }}>
+          <div style={{
+            textAlign: "center",
+            marginBottom: "50px"
+          }}>
+            <div style={{
+              width: "120px",
+              height: "120px",
+              background: "linear-gradient(45deg, #5677FC, #38B6FF)",
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              margin: "0 auto 30px",
+              fontSize: "3.5rem",
+              boxShadow: "0 15px 35px rgba(86, 119, 252, 0.4)",
+              animation: "pulse 3s ease-in-out infinite"
+            }}>
+              {index === 0 ? "👤" : index === 1 ? "🚗" : "✅"}
+            </div>
+            
+            <h2 style={{
+              fontSize: "2.5rem",
+              fontWeight: "800",
+              background: "linear-gradient(45deg, #38B6FF, #5677FC)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              marginBottom: "15px"
+            }}>
+              {index === 0 ? "Create Profile" : index === 1 ? "Vehicle Setup" : "Final Review"}
+            </h2>
+            
+            <p style={{
+              color: "rgba(255, 255, 255, 0.8)",
+              fontSize: "1.1rem",
+              lineHeight: "1.6",
+              fontWeight: "500"
+            }}>
+              {index === 0 
+                ? "Tell us about yourself to create your personalized carpooling profile."
+                : index === 1
+                ? "Add your vehicle or join as a passenger for flexible commuting."
+                : "Review your details and complete your registration process."
+              }
+            </p>
+          </div>
+
+          {/* Progress Indicator */}
+          <div style={{
+            background: "rgba(255, 255, 255, 0.05)",
+            borderRadius: "20px",
+            padding: "30px",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+            marginBottom: "40px"
+          }}>
+            <h4 style={{
+              color: "white",
+              marginBottom: "20px",
+              fontWeight: "700",
+              fontSize: "1.2rem"
+            }}>
+              📊 Registration Progress
+            </h4>
+            
+            <div style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "20px",
+              position: "relative"
+            }}>
+              <div style={{
+                position: "absolute",
+                top: "50%",
+                left: "20px",
+                right: "20px",
+                height: "4px",
+                background: "rgba(255, 255, 255, 0.1)",
+                transform: "translateY(-50%)",
+                zIndex: 1
+              }}></div>
+              
+              <div style={{
+                position: "absolute",
+                top: "50%",
+                left: "20px",
+                width: `${(index / 2) * 100}%`,
+                height: "4px",
+                background: "linear-gradient(45deg, #5677FC, #38B6FF)",
+                transform: "translateY(-50%)",
+                zIndex: 2,
+                transition: "width 0.5s ease",
+                borderRadius: "2px"
+              }}></div>
+              
+              {[1, 2, 3].map((step) => (
+                <div key={step} style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  zIndex: 3
+                }}>
+                  <div style={{
+                    width: "50px",
+                    height: "50px",
+                    borderRadius: "50%",
+                    background: index >= step - 1 
+                      ? "linear-gradient(45deg, #5677FC, #38B6FF)" 
+                      : "rgba(255, 255, 255, 0.1)",
+                    color: "white",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontWeight: "700",
+                    fontSize: "1.1rem",
+                    marginBottom: "10px",
+                    transition: "all 0.3s ease",
+                    cursor: "pointer",
+                    boxShadow: index >= step - 1 ? "0 8px 20px rgba(86, 119, 252, 0.4)" : "none"
+                  }} onClick={() => handleNavigationClick(step - 1)}>
+                    {step}
+                  </div>
+                  <span style={{
+                    fontSize: "0.85rem",
+                    fontWeight: "600",
+                    color: index >= step - 1 ? "#38B6FF" : "rgba(255, 255, 255, 0.6)"
+                  }}>
+                    {step === 1 ? "Profile" : step === 2 ? "Vehicle" : "Review"}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Benefits Section */}
+          <div>
+            <h4 style={{
+              color: "white",
+              marginBottom: "25px",
+              fontWeight: "700",
+              fontSize: "1.3rem",
+              textAlign: "center"
+            }}>
+              🎯 Why Join Carpool Connect?
+            </h4>
+            
+            <div style={{
+              display: "grid",
+              gap: "15px"
+            }}>
+              {[
+                { icon: "🌱", text: "Reduce Carbon Footprint", desc: "Eco-friendly commuting" },
+                { icon: "💰", text: "Save 30% on Commuting", desc: "Share travel costs" },
+                { icon: "🔒", text: "Blockchain Security", desc: "Your data is protected" },
+                { icon: "⚡", text: "Quick Matching", desc: "Find rides instantly" },
+                { icon: "⭐", text: "Verified Community", desc: "Trusted members only" },
+                { icon: "🕒", text: "Flexible Scheduling", desc: "Ride on your terms" }
+              ].map((benefit, i) => (
+                <div key={i} style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "15px",
+                  padding: "15px",
+                  background: "rgba(255, 255, 255, 0.03)",
+                  borderRadius: "12px",
+                  border: "1px solid rgba(255, 255, 255, 0.05)",
+                  transition: "all 0.3s ease"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "rgba(86, 119, 252, 0.1)";
+                  e.currentTarget.style.transform = "translateX(5px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "rgba(255, 255, 255, 0.03)";
+                  e.currentTarget.style.transform = "translateX(0)";
+                }}
+                >
+                  <div style={{
+                    fontSize: "1.8rem",
+                    filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.3))"
+                  }}>
+                    {benefit.icon}
+                  </div>
+                  <div>
+                    <div style={{
+                      color: "white",
+                      fontWeight: "600",
+                      fontSize: "0.95rem",
+                      marginBottom: "4px"
+                    }}>
+                      {benefit.text}
+                    </div>
+                    <div style={{
+                      color: "rgba(255, 255, 255, 0.6)",
+                      fontSize: "0.85rem",
+                      fontWeight: "500"
+                    }}>
+                      {benefit.desc}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Right Side - Form */}
         <div style={{
           background: "rgba(255, 255, 255, 0.95)",
-          borderRadius: "25px",
-          padding: "40px",
-          boxShadow: "0 20px 60px rgba(0, 0, 0, 0.15)",
-          backdropFilter: "blur(10px)"
+          borderRadius: "30px",
+          padding: "50px 40px",
+          boxShadow: "0 25px 50px rgba(0, 0, 0, 0.2)",
+          backdropFilter: "blur(10px)",
+          border: "1px solid rgba(255, 255, 255, 0.2)"
         }}>
-          <div style={{ textAlign: "center", marginBottom: "40px" }}>
+          <div style={{
+            textAlign: "center",
+            marginBottom: "40px"
+          }}>
             <h2 style={{
               fontSize: "2.2rem",
-              fontWeight: "700",
-              color: "#2d3748",
-              marginBottom: "10px"
+              fontWeight: "800",
+              color: "#1a202c",
+              marginBottom: "10px",
+              background: "linear-gradient(45deg, #5677FC, #38B6FF)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text"
             }}>
-              Join Our Carpool Community
+              Join Our Community
             </h2>
             <p style={{
               color: "#718096",
               fontSize: "1.1rem",
               fontWeight: "500"
             }}>
-              Let's get you set up in just a few steps
+              Complete your registration in 3 simple steps
             </p>
           </div>
 
-          {/* Progress Steps */}
-          <div style={{
-            display: "flex",
-            justifyContent: "center",
-            marginBottom: "50px",
-            position: "relative"
-          }}>
-            <div style={{
-              position: "absolute",
-              top: "50%",
-              left: "50px",
-              right: "50px",
-              height: "3px",
-              background: "#e2e8f0",
-              transform: "translateY(-50%)",
-              zIndex: 1
-            }}></div>
-            
-            {[1, 2, 3].map((step) => (
-              <div key={step} style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                zIndex: 2
-              }}>
-                <div style={{
-                  width: "50px",
-                  height: "50px",
-                  borderRadius: "50%",
-                  background: index >= step - 1 ? "#667eea" : "#e2e8f0",
-                  color: index >= step - 1 ? "white" : "#718096",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontWeight: "700",
-                  fontSize: "1.1rem",
-                  marginBottom: "10px",
-                  transition: "all 0.3s ease",
-                  cursor: "pointer"
-                }} onClick={() => handleNavigationClick(step - 1)}>
-                  {step}
-                </div>
-                <span style={{
-                  fontSize: "0.9rem",
-                  fontWeight: "600",
-                  color: index >= step - 1 ? "#667eea" : "#718096"
-                }}>
-                  {step === 1 ? "Profile" : step === 2 ? "Vehicle" : "Review"}
-                </span>
-              </div>
-            ))}
-          </div>
-
           {/* Carousel Content */}
-          <div style={{ position: "relative", minHeight: "500px" }}>
+          <div style={{ position: "relative", minHeight: "550px" }}>
             <Carousel 
               activeIndex={index} 
               onSelect={handleNavigationClick} 
@@ -388,20 +641,20 @@ function AdministratorDashboardUserRegistration() {
             >
               {/* Step 1: Profile Information */}
               <Carousel.Item>
-                <div style={{ padding: "20px" }}>
+                <div style={{ padding: "10px" }}>
                   <h3 style={{
                     color: "#2d3748",
-                    marginBottom: "30px",
-                    fontSize: "1.5rem",
-                    fontWeight: "600",
+                    marginBottom: "35px",
+                    fontSize: "1.6rem",
+                    fontWeight: "700",
                     textAlign: "center"
                   }}>
-                    Tell Us About Yourself
+                    👤 Personal Information
                   </h3>
                   
                   <div style={{
                     display: "grid",
-                    gap: "25px",
+                    gap: "28px",
                     maxWidth: "500px",
                     margin: "0 auto"
                   }}>
@@ -411,38 +664,46 @@ function AdministratorDashboardUserRegistration() {
                         value: name,
                         onChange: (e) => setName(e.target.value),
                         placeholder: "Enter your full name",
-                        type: "text"
+                        type: "text",
+                        icon: "👤"
                       },
                       {
                         label: "Home Address *",
                         value: homeAddress,
                         onChange: (e) => setHomeAddress(e.target.value),
                         placeholder: "Where do you stay?",
-                        type: "text"
+                        type: "text",
+                        icon: "🏠"
                       },
                       {
                         label: "Email Address *",
                         value: email,
                         onChange: (e) => setEMail(e.target.value),
                         placeholder: "your.email@example.com",
-                        type: "email"
+                        type: "email",
+                        icon: "📧"
                       },
                       {
                         label: "Gender *",
                         value: gender,
                         onChange: (e) => setGender(e.target.value),
                         placeholder: "Your gender",
-                        type: "text"
+                        type: "text",
+                        icon: "⚧️"
                       }
                     ].map((field, i) => (
                       <div key={i} style={{ position: "relative" }}>
                         <label style={{
                           display: "block",
-                          marginBottom: "8px",
-                          fontWeight: "600",
+                          marginBottom: "10px",
+                          fontWeight: "700",
                           color: "#4a5568",
-                          fontSize: "0.95rem"
+                          fontSize: "1rem",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px"
                         }}>
+                          <span>{field.icon}</span>
                           {field.label}
                         </label>
                         <input
@@ -452,20 +713,23 @@ function AdministratorDashboardUserRegistration() {
                           placeholder={field.placeholder}
                           style={{
                             width: "100%",
-                            padding: "15px 20px",
+                            padding: "16px 20px",
                             border: "2px solid #e2e8f0",
-                            borderRadius: "12px",
+                            borderRadius: "15px",
                             fontSize: "1rem",
                             transition: "all 0.3s ease",
-                            background: "white"
+                            background: "white",
+                            fontWeight: "500"
                           }}
                           onFocus={(e) => {
-                            e.target.style.borderColor = "#667eea";
-                            e.target.style.boxShadow = "0 0 0 3px rgba(102, 126, 234, 0.1)";
+                            e.target.style.borderColor = "#5677FC";
+                            e.target.style.boxShadow = "0 0 0 4px rgba(86, 119, 252, 0.1)";
+                            e.target.style.transform = "translateY(-2px)";
                           }}
                           onBlur={(e) => {
                             e.target.style.borderColor = "#e2e8f0";
                             e.target.style.boxShadow = "none";
+                            e.target.style.transform = "translateY(0)";
                           }}
                         />
                       </div>
@@ -476,22 +740,24 @@ function AdministratorDashboardUserRegistration() {
 
               {/* Step 2: Vehicle Information */}
               <Carousel.Item>
-                <div style={{ padding: "20px" }}>
+                <div style={{ padding: "10px" }}>
                   <h3 style={{
                     color: "#2d3748",
-                    marginBottom: "10px",
-                    fontSize: "1.5rem",
-                    fontWeight: "600",
+                    marginBottom: "15px",
+                    fontSize: "1.6rem",
+                    fontWeight: "700",
                     textAlign: "center"
                   }}>
-                    Vehicle Details
+                    🚗 Vehicle Details
                   </h3>
                   <p style={{
                     color: "#718096",
                     textAlign: "center",
-                    marginBottom: "30px"
+                    marginBottom: "35px",
+                    fontSize: "1rem",
+                    fontWeight: "500"
                   }}>
-                    Optional - You can skip if you don't have a vehicle
+                    Optional - Skip if you don't have a vehicle
                   </p>
 
                   {!isChoosingVehicle ? (
@@ -499,31 +765,45 @@ function AdministratorDashboardUserRegistration() {
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "center",
-                      gap: "20px",
-                      marginTop: "50px"
+                      gap: "25px",
+                      marginTop: "40px"
                     }}>
                       <button 
                         onClick={() => setIsChoosingVehicle(true)}
                         style={{
-                          background: "linear-gradient(45deg, #667eea, #764ba2)",
+                          background: "linear-gradient(45deg, #5677FC, #38B6FF)",
                           color: "white",
                           border: "none",
-                          padding: "18px 40px",
-                          borderRadius: "12px",
-                          fontSize: "1.1rem",
-                          fontWeight: "600",
+                          padding: "20px 45px",
+                          borderRadius: "15px",
+                          fontSize: "1.2rem",
+                          fontWeight: "700",
                           cursor: "pointer",
-                          transition: "all 0.3s ease",
-                          minWidth: "250px"
+                          transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+                          minWidth: "280px",
+                          boxShadow: "0 10px 30px rgba(86, 119, 252, 0.4)",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "12px",
+                          justifyContent: "center"
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.transform = "translateY(-5px) scale(1.02)";
+                          e.target.style.boxShadow = "0 15px 35px rgba(86, 119, 252, 0.5)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.transform = "translateY(0) scale(1)";
+                          e.target.style.boxShadow = "0 10px 30px rgba(86, 119, 252, 0.4)";
                         }}
                       >
-                        🚗 I Have a Vehicle
+                        <span style={{ fontSize: "1.4rem" }}>🚗</span>
+                        I Have a Vehicle
                       </button>
                       
-                      <div style={{ display: "flex", alignItems: "center", gap: "20px", margin: "20px 0" }}>
-                        <div style={{ height: "1px", background: "#e2e8f0", width: "100px" }}></div>
-                        <span style={{ color: "#718096", fontWeight: "600" }}>OR</span>
-                        <div style={{ height: "1px", background: "#e2e8f0", width: "100px" }}></div>
+                      <div style={{ display: "flex", alignItems: "center", gap: "25px", margin: "25px 0" }}>
+                        <div style={{ height: "2px", background: "#e2e8f0", width: "120px" }}></div>
+                        <span style={{ color: "#718096", fontWeight: "700", fontSize: "1rem" }}>OR</span>
+                        <div style={{ height: "2px", background: "#e2e8f0", width: "120px" }}></div>
                       </div>
 
                       <button 
@@ -532,22 +812,37 @@ function AdministratorDashboardUserRegistration() {
                           background: "transparent",
                           color: "#e53e3e",
                           border: "2px solid #e53e3e",
-                          padding: "18px 40px",
-                          borderRadius: "12px",
-                          fontSize: "1.1rem",
-                          fontWeight: "600",
+                          padding: "20px 45px",
+                          borderRadius: "15px",
+                          fontSize: "1.2rem",
+                          fontWeight: "700",
                           cursor: "pointer",
                           transition: "all 0.3s ease",
-                          minWidth: "250px"
+                          minWidth: "280px",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "12px",
+                          justifyContent: "center"
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.background = "#e53e3e";
+                          e.target.style.color = "white";
+                          e.target.style.transform = "translateY(-3px)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.background = "transparent";
+                          e.target.style.color = "#e53e3e";
+                          e.target.style.transform = "translateY(0)";
                         }}
                       >
-                        ⏭️ Skip This Step
+                        <span style={{ fontSize: "1.4rem" }}>⏭️</span>
+                        Skip This Step
                       </button>
                     </div>
                   ) : (
                     <div style={{
                       display: "grid",
-                      gap: "25px",
+                      gap: "28px",
                       maxWidth: "500px",
                       margin: "30px auto 0"
                     }}>
@@ -556,23 +851,29 @@ function AdministratorDashboardUserRegistration() {
                           label: "Vehicle Model & Type",
                           value: vehicleName,
                           onChange: (e) => setVehicleName(e.target.value),
-                          placeholder: "e.g., Toyota Camry Sedan"
+                          placeholder: "e.g., Toyota Camry Sedan",
+                          icon: "🚙"
                         },
                         {
                           label: "License Plate Number",
                           value: vehicleNumber,
                           onChange: (e) => setVehicleNumber(e.target.value),
-                          placeholder: "e.g., ABC 123"
+                          placeholder: "e.g., ABC 123",
+                          icon: "🔢"
                         }
                       ].map((field, i) => (
                         <div key={i}>
                           <label style={{
                             display: "block",
-                            marginBottom: "8px",
-                            fontWeight: "600",
+                            marginBottom: "10px",
+                            fontWeight: "700",
                             color: "#4a5568",
-                            fontSize: "0.95rem"
+                            fontSize: "1rem",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "8px"
                           }}>
+                            <span>{field.icon}</span>
                             {field.label}
                           </label>
                           <input
@@ -582,11 +883,22 @@ function AdministratorDashboardUserRegistration() {
                             placeholder={field.placeholder}
                             style={{
                               width: "100%",
-                              padding: "15px 20px",
+                              padding: "16px 20px",
                               border: "2px solid #e2e8f0",
-                              borderRadius: "12px",
+                              borderRadius: "15px",
                               fontSize: "1rem",
-                              transition: "all 0.3s ease"
+                              transition: "all 0.3s ease",
+                              fontWeight: "500"
+                            }}
+                            onFocus={(e) => {
+                              e.target.style.borderColor = "#5677FC";
+                              e.target.style.boxShadow = "0 0 0 4px rgba(86, 119, 252, 0.1)";
+                              e.target.style.transform = "translateY(-2px)";
+                            }}
+                            onBlur={(e) => {
+                              e.target.style.borderColor = "#e2e8f0";
+                              e.target.style.boxShadow = "none";
+                              e.target.style.transform = "translateY(0)";
                             }}
                           />
                         </div>
@@ -597,38 +909,47 @@ function AdministratorDashboardUserRegistration() {
                   <Modal show={showModal} onHide={handleCloseModal} centered>
                     <Modal.Header style={{
                       borderBottom: "2px solid #e2e8f0",
-                      background: "linear-gradient(45deg, #667eea, #764ba2)",
+                      background: "linear-gradient(45deg, #5677FC, #38B6FF)",
                       color: "white"
                     }}>
-                      <Modal.Title style={{ fontWeight: "700" }}>
-                        🎉 Great Choice!
+                      <Modal.Title style={{ fontWeight: "800", fontSize: "1.3rem" }}>
+                        🎉 Welcome as a Passenger!
                       </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body style={{ padding: "30px", textAlign: "center" }}>
+                    <Modal.Body style={{ padding: "35px", textAlign: "center" }}>
                       <div style={{
-                        fontSize: "3rem",
-                        marginBottom: "20px"
+                        fontSize: "4rem",
+                        marginBottom: "25px",
+                        animation: "bounce 2s infinite"
                       }}>
                         🚶
                       </div>
-                      <h5 style={{ fontWeight: "600", color: "#2d3748" }}>
-                        Welcome as a Passenger!
+                      <h5 style={{ fontWeight: "700", color: "#2d3748", fontSize: "1.3rem", marginBottom: "15px" }}>
+                        Great Choice!
                       </h5>
-                      <p style={{ color: "#718096", lineHeight: "1.6" }}>
-                        You've chosen to join our platform as a passenger. You can always add a vehicle later in your profile settings.
+                      <p style={{ color: "#718096", lineHeight: "1.7", fontSize: "1rem" }}>
+                        You've chosen to join our platform as a passenger. You can always add a vehicle later in your profile settings to become a driver.
                       </p>
                     </Modal.Body>
                     <Modal.Footer style={{ borderTop: "none", justifyContent: "center" }}>
                       <button 
                         onClick={handleCloseModal}
                         style={{
-                          background: "linear-gradient(45deg, #667eea, #764ba2)",
+                          background: "linear-gradient(45deg, #5677FC, #38B6FF)",
                           color: "white",
                           border: "none",
-                          padding: "12px 30px",
-                          borderRadius: "10px",
-                          fontWeight: "600",
-                          cursor: "pointer"
+                          padding: "14px 35px",
+                          borderRadius: "12px",
+                          fontWeight: "700",
+                          cursor: "pointer",
+                          fontSize: "1rem",
+                          transition: "all 0.3s ease"
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.transform = "scale(1.05)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.transform = "scale(1)";
                         }}
                       >
                         Continue to Next Step
@@ -640,97 +961,105 @@ function AdministratorDashboardUserRegistration() {
 
               {/* Step 3: Review and Submit */}
               <Carousel.Item>
-                <div style={{ padding: "20px" }}>
+                <div style={{ padding: "10px" }}>
                   <h3 style={{
                     color: "#2d3748",
-                    marginBottom: "30px",
-                    fontSize: "1.5rem",
-                    fontWeight: "600",
+                    marginBottom: "35px",
+                    fontSize: "1.6rem",
+                    fontWeight: "700",
                     textAlign: "center"
                   }}>
-                    Final Review & Agreement
+                    ✅ Final Review & Agreement
                   </h3>
 
                   <div style={{
-                    background: "#f7fafc",
-                    padding: "30px",
-                    borderRadius: "15px",
-                    marginBottom: "30px"
+                    background: "linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%)",
+                    padding: "35px",
+                    borderRadius: "20px",
+                    marginBottom: "35px",
+                    border: "2px solid #e2e8f0"
                   }}>
                     <h4 style={{
                       color: "#2d3748",
-                      marginBottom: "20px",
-                      fontWeight: "600"
+                      marginBottom: "25px",
+                      fontWeight: "700",
+                      fontSize: "1.3rem",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px"
                     }}>
                       📋 Application Summary
                     </h4>
                     
                     <div style={{
                       display: "grid",
-                      gap: "15px",
+                      gap: "18px",
                       color: "#4a5568"
                     }}>
-                      <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <span>Name:</span>
-                        <strong>{name || "Not provided"}</strong>
-                      </div>
-                      <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <span>Email:</span>
-                        <strong>{email || "Not provided"}</strong>
-                      </div>
-                      <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <span>Location:</span>
-                        <strong>{homeAddress || "Not provided"}</strong>
-                      </div>
-                      <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <span>Gender:</span>
-                        <strong>{gender || "Not provided"}</strong>
-                      </div>
-                      {isChoosingVehicle && (
-                        <>
-                          <div style={{ display: "flex", justifyContent: "space-between" }}>
-                            <span>Vehicle:</span>
-                            <strong>{vehicleName || "Not provided"}</strong>
-                          </div>
-                          <div style={{ display: "flex", justifyContent: "space-between" }}>
-                            <span>License Plate:</span>
-                            <strong>{vehicleNumber || "Not provided"}</strong>
-                          </div>
-                        </>
-                      )}
+                      {[
+                        { label: "Name", value: name },
+                        { label: "Email", value: email },
+                        { label: "Location", value: homeAddress },
+                        { label: "Gender", value: gender },
+                        ...(isChoosingVehicle ? [
+                          { label: "Vehicle", value: vehicleName },
+                          { label: "License Plate", value: vehicleNumber }
+                        ] : [])
+                      ].map((field, i) => (
+                        <div key={i} style={{ 
+                          display: "flex", 
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          padding: "12px 0",
+                          borderBottom: "1px solid #e2e8f0"
+                        }}>
+                          <span style={{ fontWeight: "600", color: "#4a5568" }}>{field.label}:</span>
+                          <strong style={{ 
+                            color: field.value ? "#2d3748" : "#e53e3e",
+                            fontSize: "1rem"
+                          }}>
+                            {field.value || "Not provided"}
+                          </strong>
+                        </div>
+                      ))}
                     </div>
                   </div>
 
                   <div style={{
                     display: "flex",
                     alignItems: "flex-start",
-                    gap: "15px",
-                    marginBottom: "30px",
-                    padding: "20px",
-                    background: "#fff5f5",
-                    borderRadius: "12px",
-                    border: "2px solid #fed7d7"
+                    gap: "18px",
+                    marginBottom: "35px",
+                    padding: "25px",
+                    background: "linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%)",
+                    borderRadius: "15px",
+                    border: "2px solid #fc8181"
                   }}>
                     <input
                       type="checkbox"
                       checked={isChecked}
                       onChange={handleCheckboxChange}
                       style={{
-                        transform: "scale(1.3)",
-                        marginTop: "5px"
+                        transform: "scale(1.4)",
+                        marginTop: "5px",
+                        accentColor: "#5677FC"
                       }}
                     />
                     <div>
                       <h5 style={{
                         color: "#2d3748",
-                        marginBottom: "10px",
-                        fontWeight: "600"
+                        marginBottom: "12px",
+                        fontWeight: "700",
+                        fontSize: "1.1rem",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px"
                       }}>
                         📝 Declaration of Accuracy
                       </h5>
                       <p style={{
                         color: "#718096",
-                        lineHeight: "1.6",
+                        lineHeight: "1.7",
                         fontSize: "0.95rem",
                         margin: 0
                       }}>
@@ -747,20 +1076,53 @@ function AdministratorDashboardUserRegistration() {
                     style={{
                       width: "100%",
                       background: isChecked && !isSubmitting
-                        ? "linear-gradient(45deg, #667eea, #764ba2)" 
+                        ? "linear-gradient(45deg, #5677FC, #38B6FF)" 
                         : "#cbd5e0",
                       color: "white",
                       border: "none",
-                      padding: "18px",
-                      borderRadius: "12px",
-                      fontSize: "1.1rem",
-                      fontWeight: "600",
+                      padding: "20px",
+                      borderRadius: "15px",
+                      fontSize: "1.2rem",
+                      fontWeight: "700",
                       cursor: isChecked && !isSubmitting ? "pointer" : "not-allowed",
-                      transition: "all 0.3s ease",
-                      opacity: isChecked ? 1 : 0.6
+                      transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+                      opacity: isChecked ? 1 : 0.6,
+                      boxShadow: isChecked && !isSubmitting ? "0 10px 30px rgba(86, 119, 252, 0.4)" : "none",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "10px"
+                    }}
+                    onMouseEnter={(e) => {
+                      if (isChecked && !isSubmitting) {
+                        e.target.style.transform = "translateY(-3px) scale(1.02)";
+                        e.target.style.boxShadow = "0 15px 35px rgba(86, 119, 252, 0.5)";
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (isChecked && !isSubmitting) {
+                        e.target.style.transform = "translateY(0) scale(1)";
+                        e.target.style.boxShadow = "0 10px 30px rgba(86, 119, 252, 0.4)";
+                      }
                     }}
                   >
-                    {isSubmitting ? "⏳ Submitting..." : "🚀 Submit Application"}
+                    {isSubmitting ? (
+                      <>
+                        <div style={{
+                          width: "20px",
+                          height: "20px",
+                          border: "2px solid transparent",
+                          borderTop: "2px solid white",
+                          borderRadius: "50%",
+                          animation: "spin 1s linear infinite"
+                        }}></div>
+                        Submitting Application...
+                      </>
+                    ) : (
+                      <>
+                        🚀 Submit Application
+                      </>
+                    )}
                   </button>
                 </div>
               </Carousel.Item>
@@ -770,124 +1132,67 @@ function AdministratorDashboardUserRegistration() {
             <div style={{
               display: "flex",
               justifyContent: "space-between",
-              marginTop: "40px",
-              padding: "0 20px"
+              marginTop: "50px",
+              padding: "0 10px"
             }}>
               <button
                 onClick={() => handleNavigationClick(index - 1)}
                 disabled={index === 0}
                 style={{
-                  background: index === 0 ? "#e2e8f0" : "linear-gradient(45deg, #667eea, #764ba2)",
+                  background: index === 0 ? "#e2e8f0" : "linear-gradient(45deg, #5677FC, #38B6FF)",
                   color: index === 0 ? "#a0aec0" : "white",
                   border: "none",
-                  padding: "12px 25px",
-                  borderRadius: "10px",
-                  fontWeight: "600",
+                  padding: "14px 30px",
+                  borderRadius: "12px",
+                  fontWeight: "700",
                   cursor: index === 0 ? "not-allowed" : "pointer",
-                  opacity: index === 0 ? 0.5 : 1
+                  opacity: index === 0 ? 0.5 : 1,
+                  transition: "all 0.3s ease",
+                  fontSize: "1rem"
+                }}
+                onMouseEnter={(e) => {
+                  if (index !== 0) {
+                    e.target.style.transform = "translateX(-5px)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (index !== 0) {
+                    e.target.style.transform = "translateX(0)";
+                  }
                 }}
               >
-                ← Previous
+                ← Previous Step
               </button>
               
               <button
                 onClick={() => handleNavigationClick(index + 1)}
                 disabled={index === 2}
                 style={{
-                  background: index === 2 ? "#e2e8f0" : "linear-gradient(45deg, #667eea, #764ba2)",
+                  background: index === 2 ? "#e2e8f0" : "linear-gradient(45deg, #5677FC, #38B6FF)",
                   color: index === 2 ? "#a0aec0" : "white",
                   border: "none",
-                  padding: "12px 25px",
-                  borderRadius: "10px",
-                  fontWeight: "600",
+                  padding: "14px 30px",
+                  borderRadius: "12px",
+                  fontWeight: "700",
                   cursor: index === 2 ? "not-allowed" : "pointer",
-                  opacity: index === 2 ? 0.5 : 1
+                  opacity: index === 2 ? 0.5 : 1,
+                  transition: "all 0.3s ease",
+                  fontSize: "1rem"
+                }}
+                onMouseEnter={(e) => {
+                  if (index !== 2) {
+                    e.target.style.transform = "translateX(5px)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (index !== 2) {
+                    e.target.style.transform = "translateX(0)";
+                  }
                 }}
               >
-                Next →
+                Next Step →
               </button>
             </div>
-          </div>
-        </div>
-
-        {/* Right Side - Visual */}
-        <div style={{
-          background: "rgba(255, 255, 255, 0.95)",
-          borderRadius: "25px",
-          padding: "40px",
-          boxShadow: "0 20px 60px rgba(0, 0, 0, 0.15)",
-          backdropFilter: "blur(10px)",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          textAlign: "center"
-        }}>
-          <div style={{
-            width: "200px",
-            height: "200px",
-            background: "linear-gradient(45deg, #667eea, #764ba2)",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginBottom: "30px"
-          }}>
-            <span style={{ fontSize: "4rem" }}>
-              {index === 0 ? "👤" : index === 1 ? "🚗" : "✅"}
-            </span>
-          </div>
-          
-          <h3 style={{
-            color: "#2d3748",
-            marginBottom: "15px",
-            fontSize: "1.5rem",
-            fontWeight: "600"
-          }}>
-            {index === 0 ? "Personal Profile" : index === 1 ? "Vehicle Setup" : "Final Review"}
-          </h3>
-          
-          <p style={{
-            color: "#718096",
-            lineHeight: "1.6",
-            fontSize: "1rem"
-          }}>
-            {index === 0 
-              ? "Tell us about yourself to help us create your personalized carpooling experience."
-              : index === 1
-              ? "Add your vehicle details to become a driver, or skip to join as a passenger."
-              : "Review your information and agree to our terms to complete your registration."
-            }
-          </p>
-
-          <div style={{
-            marginTop: "40px",
-            padding: "20px",
-            background: "#f7fafc",
-            borderRadius: "15px",
-            width: "100%"
-          }}>
-            <h4 style={{
-              color: "#2d3748",
-              marginBottom: "15px",
-              fontWeight: "600",
-              fontSize: "1.1rem"
-            }}>
-              💡 Why Join Us?
-            </h4>
-            <ul style={{
-              color: "#718096",
-              textAlign: "left",
-              paddingLeft: "20px",
-              lineHeight: "1.8",
-              fontSize: "0.9rem"
-            }}>
-              <li>Reduce your carbon footprint</li>
-              <li>Save on commuting costs</li>
-              <li>Meet like-minded commuters</li>
-              <li>Flexible scheduling</li>
-              <li>Verified community members</li>
-            </ul>
           </div>
         </div>
       </div>
@@ -898,16 +1203,20 @@ function AdministratorDashboardUserRegistration() {
           background: "linear-gradient(45deg, #e53e3e, #c53030)",
           color: "white"
         }}>
-          <Modal.Title style={{ fontWeight: "700" }}>
+          <Modal.Title style={{ fontWeight: "800", fontSize: "1.3rem" }}>
             ⚠️ Registration Issue
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{ padding: "30px", textAlign: "center" }}>
-          <div style={{ fontSize: "3rem", marginBottom: "20px" }}>❌</div>
-          <h5 style={{ fontWeight: "600", color: "#2d3748", marginBottom: "15px" }}>
+        <Modal.Body style={{ padding: "35px", textAlign: "center" }}>
+          <div style={{ 
+            fontSize: "4rem", 
+            marginBottom: "25px",
+            animation: "shake 0.5s ease-in-out"
+          }}>❌</div>
+          <h5 style={{ fontWeight: "700", color: "#2d3748", marginBottom: "15px", fontSize: "1.3rem" }}>
             Account Already Exists
           </h5>
-          <p style={{ color: "#718096", lineHeight: "1.6" }}>
+          <p style={{ color: "#718096", lineHeight: "1.7", fontSize: "1rem" }}>
             The provided wallet address or email is already associated with an existing account. 
             Please use different credentials to create a new application.
           </p>
@@ -919,10 +1228,18 @@ function AdministratorDashboardUserRegistration() {
               background: "linear-gradient(45deg, #e53e3e, #c53030)",
               color: "white",
               border: "none",
-              padding: "12px 30px",
-              borderRadius: "10px",
-              fontWeight: "600",
-              cursor: "pointer"
+              padding: "14px 35px",
+              borderRadius: "12px",
+              fontWeight: "700",
+              cursor: "pointer",
+              fontSize: "1rem",
+              transition: "all 0.3s ease"
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.transform = "scale(1.05)";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.transform = "scale(1)";
             }}
           >
             Understand
@@ -935,30 +1252,35 @@ function AdministratorDashboardUserRegistration() {
           background: "linear-gradient(45deg, #38a169, #2f855a)",
           color: "white"
         }}>
-          <Modal.Title style={{ fontWeight: "700" }}>
+          <Modal.Title style={{ fontWeight: "800", fontSize: "1.3rem" }}>
             🎉 Registration Successful!
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{ padding: "30px", textAlign: "center" }}>
-          <div style={{ fontSize: "3rem", marginBottom: "20px" }}>✅</div>
-          <h5 style={{ fontWeight: "600", color: "#2d3748", marginBottom: "15px" }}>
+        <Modal.Body style={{ padding: "35px", textAlign: "center" }}>
+          <div style={{ 
+            fontSize: "4rem", 
+            marginBottom: "25px",
+            animation: "bounce 2s infinite"
+          }}>✅</div>
+          <h5 style={{ fontWeight: "700", color: "#2d3748", marginBottom: "15px", fontSize: "1.3rem" }}>
             Welcome to Our Community!
           </h5>
-          <p style={{ color: "#718096", lineHeight: "1.6", marginBottom: "20px" }}>
+          <p style={{ color: "#718096", lineHeight: "1.7", marginBottom: "25px", fontSize: "1rem" }}>
             Your application has been successfully submitted and is now under review.
           </p>
           <div style={{
-            background: "#e6fffa",
-            padding: "15px",
-            borderRadius: "10px",
-            border: "2px solid #81e6d9"
+            background: "linear-gradient(135deg, #c6f6d5 0%, #9ae6b4 100%)",
+            padding: "20px",
+            borderRadius: "15px",
+            border: "2px solid #68d391",
+            marginBottom: "20px"
           }}>
-            <strong style={{ color: "#2d3748" }}>Application ID: </strong>
-            <span style={{ color: "#2c7a7b", fontWeight: "700" }}>
+            <strong style={{ color: "#2d3748", fontSize: "1.1rem" }}>Application ID: </strong>
+            <span style={{ color: "#2c7a7b", fontWeight: "800", fontSize: "1.2rem" }}>
               {passengerRequests.length}
             </span>
           </div>
-          <p style={{ color: "#718096", fontSize: "0.9rem", marginTop: "15px" }}>
+          <p style={{ color: "#718096", fontSize: "0.9rem", fontStyle: "italic" }}>
             Please save this ID for future reference when checking your application status.
           </p>
         </Modal.Body>
@@ -969,16 +1291,84 @@ function AdministratorDashboardUserRegistration() {
               background: "linear-gradient(45deg, #38a169, #2f855a)",
               color: "white",
               border: "none",
-              padding: "12px 30px",
-              borderRadius: "10px",
-              fontWeight: "600",
-              cursor: "pointer"
+              padding: "14px 35px",
+              borderRadius: "12px",
+              fontWeight: "700",
+              cursor: "pointer",
+              fontSize: "1rem",
+              transition: "all 0.3s ease"
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.transform = "scale(1.05)";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.transform = "scale(1)";
             }}
           >
             Start Exploring
           </button>
         </Modal.Footer>
       </Modal>
+
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px) rotate(0deg);
+          }
+          50% {
+            transform: translateY(-20px) rotate(2deg);
+          }
+        }
+        
+        @keyframes floatParticle {
+          0% {
+            transform: translateY(100vh) rotate(0deg);
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          90% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-100px) rotate(360deg);
+            opacity: 0;
+          }
+        }
+        
+        @keyframes pulse {
+          0%, 100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.05);
+          }
+        }
+        
+        @keyframes bounce {
+          0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0);
+          }
+          40% {
+            transform: translateY(-10px);
+          }
+          60% {
+            transform: translateY(-5px);
+          }
+        }
+        
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          25% { transform: translateX(-5px); }
+          75% { transform: translateX(5px); }
+        }
+      `}</style>
     </div>
   );
 }

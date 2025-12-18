@@ -1,6 +1,5 @@
 const Message= require("./Schema/MessageModel")
 const db = require("./db")
-const mongoose = require('mongoose')
 
 const ConnectToMongo=require("./db")
 ConnectToMongo();
@@ -15,11 +14,7 @@ const {Server} = require("socket.io");
 
 
 const corsOptions = {
-  origin: [
-    process.env.FRONTEND_URL || 'http://localhost:3000',
-    'https://imp-pearl.vercel.app',
-    'https://unsoporiferous-ruinously-gertie.ngrok-free.dev'
-  ],
+  origin: 'http://localhost:3000', 
   methods: ['GET', 'POST'], 
 };
 
@@ -30,25 +25,6 @@ app.use(cors(corsOptions));
 
 const server = http.createServer(app);
 
-const io= new Server(server,{
-    cors: {
-        origin: [
-          process.env.FRONTEND_URL || "http://localhost:3000",
-          "https://imp-pearl.vercel.app",
-          "https://unsoporiferous-ruinously-gertie.ngrok-free.dev"
-        ],
-        methods:["GET","POST"],
-    }
-})
-
-// Health check route
-app.get('/', (req, res) => {
-  res.status(200).json({ status: 'Server is running', message: 'Carpool Backend API' });
-});
-
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'healthy' });
-});
 
 
 app.post('/messages', async (req, res) => {
@@ -88,6 +64,13 @@ app.get('/messages/:room', async (req, res) => {
     res.status(500).json({ error: 'Failed to retrieve chat history' });
   }
 });
+
+const io= new Server(server,{
+    cors: {
+        origin: "http://localhost:3000",
+        methods:["GET","POST"],
+    }
+})
 
 const userList = {};
 
@@ -136,21 +119,6 @@ io.on("connection",(socket)=>{
     })
 })
 
-const PORT = process.env.PORT || 4000;
-server.listen(PORT, ()=>{
-    console.log(`Server Running on port ${PORT}`)
+server.listen(4000, ()=>{
+    console.log("Server Running")
 })
-
-// Graceful shutdown
-process.on('SIGTERM', () => {
-  console.log('SIGTERM signal received: closing HTTP server')
-  server.close(() => {
-    console.log('HTTP server closed')
-    mongoose.connection.close(false, () => {
-      console.log('MongoDB connection closed')
-      process.exit(0)
-    })
-  })
-})
-
-module.exports = app;

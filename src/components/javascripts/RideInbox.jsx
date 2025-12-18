@@ -8,7 +8,7 @@ import Chat from './Chat';
 import Web3 from 'web3';
 import CommuteIOABI from '../ABI/contracttestingABI.json';
 
-const socket = io.connect("https://unsoporiferous-ruinously-gertie.ngrok-free.dev");
+const socket = io.connect("http://localhost:4000");
 
 const contractAddress = '0x7B4c81ea9461f5A016359ACE651690768C87795E';
 

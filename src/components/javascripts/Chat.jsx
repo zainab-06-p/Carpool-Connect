@@ -5,7 +5,7 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 import { FaPaperPlane, FaSearch, FaUserFriends, FaUserCircle } from 'react-icons/fa'
 import { BsChatDotsFill } from 'react-icons/bs';
 
-const socket = io('https://unsoporiferous-ruinously-gertie.ngrok-free.dev');
+const socket = io('http://localhost:4000');
 
 function Chat({ socket, username, room }) {
   const [currentMessage, setCurrentMessage] = useState("");
@@ -21,7 +21,7 @@ function Chat({ socket, username, room }) {
         time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes(),
       };
 
-      await axios.post('https://unsoporiferous-ruinously-gertie.ngrok-free.dev/messages', messageData);
+      await axios.post('http://localhost:4000/messages', messageData);
 
       await new Promise((resolve) => {
         socket.emit("send_message", messageData, resolve);
@@ -36,13 +36,12 @@ function Chat({ socket, username, room }) {
   };
 
   useEffect(() => {
-    axios.get(`https://unsoporiferous-ruinously-gertie.ngrok-free.dev/messages/${room}`)
+    axios.get(`http://localhost:4000/messages/${room}`)
       .then((response) => {
-        setMessageList(Array.isArray(response.data) ? response.data : []);
+        setMessageList(response.data);
       })
       .catch((error) => {
         console.error('Error retrieving chat history:', error);
-        setMessageList([]);
       });
 
     socket.on("receive_message", receiveMessageHandler)
@@ -359,7 +358,7 @@ function Chat({ socket, username, room }) {
                   <p>Start the conversation by sending the first message!</p>
                 </div>
               ) : (
-                Array.isArray(messageList) && messageList.map((messageContent, index) => (
+                messageList.map((messageContent, index) => (
                   <div key={index} style={{
                     display: 'flex',
                     justifyContent: username === messageContent.author ? 'flex-end' : 'flex-start',

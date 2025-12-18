@@ -1,2 +1,2 @@
-export const API_URL = 'https://unsoporiferous-ruinously-gertie.ngrok-free.dev';
-export const SOCKET_URL = 'https://unsoporiferous-ruinously-gertie.ngrok-free.dev';
+export const API_URL = 'http://localhost:4000';
+export const SOCKET_URL = 'ws://localhost:4000';

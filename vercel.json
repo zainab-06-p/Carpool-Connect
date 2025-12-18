@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "env": {
+    "REACT_APP_BACKEND_URL": "https://unsoporiferous-ruinously-gertie.ngrok-free.dev",
+    "REACT_APP_SOCKET_URL": "https://unsoporiferous-ruinously-gertie.ngrok-free.dev",
+    "CI": "false"
+  },
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/.*",
+      "dest": "/index.html"
+    }
+  ]
+}

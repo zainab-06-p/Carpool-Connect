@@ -4,8 +4,9 @@ import io from 'socket.io-client';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { FaPaperPlane, FaSearch, FaUserFriends, FaUserCircle } from 'react-icons/fa'
 import { BsChatDotsFill } from 'react-icons/bs';
+import { API_URL, SOCKET_URL } from './config';
 
-const socket = io('http://localhost:4000');
+const socket = io(SOCKET_URL);
 
 function Chat({ socket, username, room }) {
   const [currentMessage, setCurrentMessage] = useState("");
@@ -21,7 +22,7 @@ function Chat({ socket, username, room }) {
         time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes(),
       };
 
-      await axios.post('http://localhost:4000/messages', messageData);
+      await axios.post(`${API_URL}/messages`, messageData);
 
       await new Promise((resolve) => {
         socket.emit("send_message", messageData, resolve);
@@ -36,12 +37,19 @@ function Chat({ socket, username, room }) {
   };
 
   useEffect(() => {
-    axios.get(`http://localhost:4000/messages/${room}`)
+    axios.get(`${API_URL}/messages/${room}`)
       .then((response) => {
-        setMessageList(response.data);
+        console.log('Chat history response:', response.data);
+        console.log('Is array?', Array.isArray(response.data));
+        // Ensure response.data is an array
+        const messages = Array.isArray(response.data) ? response.data : [];
+        setMessageList(messages);
       })
       .catch((error) => {
         console.error('Error retrieving chat history:', error);
+        console.error('Error response:', error.response);
+        // Set empty array on error to prevent map errors
+        setMessageList([]);
       });
 
     socket.on("receive_message", receiveMessageHandler)

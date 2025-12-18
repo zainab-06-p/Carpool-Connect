@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const Message= require("./Schema/MessageModel")
 const db = require("./db")
 
@@ -11,16 +13,27 @@ const http = require('http');
 const cors = require('cors');
 const {Server} = require("socket.io");
 
-
+// Dynamic CORS configuration to support Vercel deployment
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  process.env.FRONTEND_URL, // Vercel frontend URL will be set as environment variable
+];
 
 const corsOptions = {
-  origin: 'http://localhost:3000', 
-  methods: ['GET', 'POST'], 
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, Postman, or same-origin)
+    if (!origin || allowedOrigins.includes(origin) || origin.includes('vercel.app')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST'],
+  credentials: true,
 };
 
 app.use(express.json());
-
-
 app.use(cors(corsOptions));
 
 const server = http.createServer(app);
@@ -67,8 +80,15 @@ app.get('/messages/:room', async (req, res) => {
 
 const io= new Server(server,{
     cors: {
-        origin: "http://localhost:3000",
+        origin: function (origin, callback) {
+          if (!origin || allowedOrigins.includes(origin) || origin.includes('vercel.app')) {
+            callback(null, true);
+          } else {
+            callback(new Error('Not allowed by CORS'));
+          }
+        },
         methods:["GET","POST"],
+        credentials: true,
     }
 })
 
@@ -119,6 +139,8 @@ io.on("connection",(socket)=>{
     })
 })
 
-server.listen(4000, ()=>{
-    console.log("Server Running")
+const PORT = process.env.PORT || 4000;
+
+server.listen(PORT, ()=>{
+    console.log(`Server Running on port ${PORT}`)
 })

@@ -7,8 +7,9 @@ import { Link } from 'react-router-dom';
 import Chat from './Chat';
 import Web3 from 'web3';
 import CommuteIOABI from '../ABI/contracttestingABI.json';
+import { SOCKET_URL } from './config';
 
-const socket = io.connect("http://localhost:4000");
+const socket = io.connect(SOCKET_URL);
 
 const contractAddress = '0x7B4c81ea9461f5A016359ACE651690768C87795E';
 

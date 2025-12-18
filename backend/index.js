@@ -14,7 +14,7 @@ const {Server} = require("socket.io");
 
 
 const corsOptions = {
-  origin: 'http://localhost:3000', 
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000', 
   methods: ['GET', 'POST'], 
 };
 
@@ -67,7 +67,7 @@ app.get('/messages/:room', async (req, res) => {
 
 const io= new Server(server,{
     cors: {
-        origin: "http://localhost:3000",
+        origin: process.env.FRONTEND_URL || "http://localhost:3000",
         methods:["GET","POST"],
     }
 })
@@ -119,6 +119,9 @@ io.on("connection",(socket)=>{
     })
 })
 
-server.listen(4000, ()=>{
-    console.log("Server Running")
+const PORT = process.env.PORT || 4000;
+server.listen(PORT, ()=>{
+    console.log(`Server Running on port ${PORT}`)
 })
+
+module.exports = app;

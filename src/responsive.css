@@ -1,0 +1,441 @@
+/* Mobile Responsive Styles for Carpool Connect */
+
+/* Base Mobile Styles - phones up to 768px */
+@media screen and (max-width: 768px) {
+  
+  /* Global Resets for Mobile */
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    overflow-x: hidden;
+    font-size: 14px;
+  }
+
+  /* Container adjustments */
+  .container {
+    width: 100% !important;
+    padding: 0 15px !important;
+    margin: 0 auto !important;
+  }
+
+  /* Navigation Bar Mobile */
+  nav {
+    flex-direction: column !important;
+    padding: 10px !important;
+  }
+
+  nav .navbar {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  nav ul {
+    flex-direction: column !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  nav li {
+    width: 100% !important;
+    margin: 5px 0 !important;
+  }
+
+  /* Buttons Mobile */
+  button, .btn {
+    width: 100% !important;
+    padding: 12px 20px !important;
+    font-size: 14px !important;
+    margin: 5px 0 !important;
+  }
+
+  /* Forms Mobile */
+  input, textarea, select {
+    width: 100% !important;
+    font-size: 16px !important; /* Prevents zoom on iOS */
+    padding: 12px !important;
+    margin: 8px 0 !important;
+  }
+
+  /* Cards and Panels */
+  .card, .panel, .dashboard-card {
+    width: 100% !important;
+    margin: 10px 0 !important;
+    padding: 15px !important;
+  }
+
+  /* Grid Layouts */
+  .row {
+    flex-direction: column !important;
+  }
+
+  .col, [class*="col-"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 10px 0 !important;
+  }
+
+  /* Tables Mobile */
+  table {
+    width: 100% !important;
+    display: block !important;
+    overflow-x: auto !important;
+    font-size: 12px !important;
+  }
+
+  thead {
+    display: none !important;
+  }
+
+  tbody, tr, td {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  td {
+    text-align: left !important;
+    padding: 10px !important;
+    border-bottom: 1px solid #333 !important;
+  }
+
+  td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: inline-block;
+    width: 40%;
+  }
+
+  /* Modals Mobile */
+  .modal-dialog, .modal-content {
+    width: 95% !important;
+    margin: 10px auto !important;
+    max-width: 95vw !important;
+  }
+
+  .modal-body {
+    padding: 15px !important;
+    max-height: 70vh !important;
+    overflow-y: auto !important;
+  }
+
+  /* Chat Interface Mobile */
+  .chat-container {
+    flex-direction: column !important;
+    height: calc(100vh - 60px) !important;
+  }
+
+  .chat-sidebar {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 200px !important;
+    overflow-y: auto !important;
+    border-right: none !important;
+    border-bottom: 2px solid #333 !important;
+  }
+
+  .chat-main {
+    width: 100% !important;
+    height: calc(100vh - 260px) !important;
+  }
+
+  .chat-messages {
+    height: calc(100vh - 320px) !important;
+    padding: 10px !important;
+  }
+
+  .chat-input-container {
+    padding: 10px !important;
+    flex-direction: column !important;
+  }
+
+  .chat-input {
+    width: 100% !important;
+    margin-bottom: 10px !important;
+    font-size: 16px !important;
+  }
+
+  .chat-send-button {
+    width: 100% !important;
+    padding: 12px !important;
+  }
+
+  .message-bubble {
+    max-width: 85% !important;
+    padding: 10px !important;
+    font-size: 14px !important;
+    word-wrap: break-word !important;
+  }
+
+  /* Dashboard Mobile */
+  .dashboard-container {
+    flex-direction: column !important;
+    padding: 10px !important;
+  }
+
+  .dashboard-sidebar {
+    width: 100% !important;
+    height: auto !important;
+    position: relative !important;
+    margin-bottom: 20px !important;
+  }
+
+  .dashboard-content {
+    width: 100% !important;
+    padding: 10px !important;
+  }
+
+  /* Homepage Banner Mobile */
+  .banner {
+    padding: 30px 15px !important;
+    text-align: center !important;
+  }
+
+  .banner h1 {
+    font-size: 28px !important;
+    line-height: 1.3 !important;
+  }
+
+  .banner p {
+    font-size: 16px !important;
+  }
+
+  .banner img {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 300px !important;
+    margin: 20px auto !important;
+  }
+
+  /* Projects/Cards Grid */
+  .project-card, .ride-card {
+    width: 100% !important;
+    margin: 15px 0 !important;
+  }
+
+  /* Map Container Mobile */
+  .map-container {
+    width: 100% !important;
+    height: 300px !important;
+    margin: 10px 0 !important;
+  }
+
+  .leaflet-container {
+    height: 300px !important;
+  }
+
+  /* Ride Details Mobile */
+  .ride-details {
+    flex-direction: column !important;
+  }
+
+  .ride-info {
+    width: 100% !important;
+    margin: 10px 0 !important;
+  }
+
+  /* User Profile Mobile */
+  .profile-container {
+    flex-direction: column !important;
+    padding: 15px !important;
+  }
+
+  .profile-avatar {
+    width: 100px !important;
+    height: 100px !important;
+    margin: 0 auto 20px !important;
+  }
+
+  .profile-info {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  /* Footer Mobile */
+  footer {
+    padding: 20px 15px !important;
+    text-align: center !important;
+  }
+
+  footer .row {
+    flex-direction: column !important;
+  }
+
+  footer .col {
+    width: 100% !important;
+    margin: 15px 0 !important;
+  }
+
+  /* Hide on Mobile */
+  .hide-mobile {
+    display: none !important;
+  }
+
+  /* Show only on Mobile */
+  .show-mobile {
+    display: block !important;
+  }
+
+  /* Flex adjustments */
+  .flex-row-mobile {
+    flex-direction: column !important;
+  }
+
+  /* Text sizes Mobile */
+  h1 { font-size: 24px !important; }
+  h2 { font-size: 20px !important; }
+  h3 { font-size: 18px !important; }
+  h4 { font-size: 16px !important; }
+  h5 { font-size: 14px !important; }
+  h6 { font-size: 13px !important; }
+
+  /* Padding and Margin adjustments */
+  .p-5 { padding: 15px !important; }
+  .p-4 { padding: 12px !important; }
+  .p-3 { padding: 10px !important; }
+  .m-5 { margin: 15px !important; }
+  .m-4 { margin: 12px !important; }
+  .m-3 { margin: 10px !important; }
+
+  /* Spacing utilities */
+  .mt-5 { margin-top: 15px !important; }
+  .mb-5 { margin-bottom: 15px !important; }
+  .pt-5 { padding-top: 15px !important; }
+  .pb-5 { padding-bottom: 15px !important; }
+}
+
+/* Tablet Styles - 768px to 1024px */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  
+  body {
+    font-size: 15px;
+  }
+
+  .container {
+    width: 95% !important;
+    padding: 0 20px !important;
+  }
+
+  .chat-container {
+    flex-direction: row !important;
+  }
+
+  .chat-sidebar {
+    width: 250px !important;
+    height: 100% !important;
+  }
+
+  .chat-main {
+    width: calc(100% - 250px) !important;
+  }
+
+  .dashboard-sidebar {
+    width: 200px !important;
+  }
+
+  .dashboard-content {
+    width: calc(100% - 200px) !important;
+  }
+
+  .col-md-6 {
+    width: 48% !important;
+    display: inline-block !important;
+  }
+
+  .col-md-4 {
+    width: 31% !important;
+    display: inline-block !important;
+  }
+}
+
+/* Small phones - up to 480px */
+@media screen and (max-width: 480px) {
+  
+  body {
+    font-size: 13px;
+  }
+
+  h1 { font-size: 22px !important; }
+  h2 { font-size: 18px !important; }
+  h3 { font-size: 16px !important; }
+
+  .banner h1 {
+    font-size: 24px !important;
+  }
+
+  .modal-dialog {
+    width: 98% !important;
+  }
+
+  button, .btn {
+    padding: 10px 15px !important;
+    font-size: 13px !important;
+  }
+
+  .chat-messages {
+    height: calc(100vh - 350px) !important;
+  }
+
+  .message-bubble {
+    max-width: 90% !important;
+    font-size: 13px !important;
+  }
+
+  .profile-avatar {
+    width: 80px !important;
+    height: 80px !important;
+  }
+
+  .map-container {
+    height: 250px !important;
+  }
+}
+
+/* Landscape mode for phones */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  
+  .chat-container {
+    height: auto !important;
+    min-height: 100vh !important;
+  }
+
+  .chat-sidebar {
+    max-height: 150px !important;
+  }
+
+  .chat-messages {
+    height: 250px !important;
+  }
+
+  .modal-body {
+    max-height: 60vh !important;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  
+  /* Larger touch targets */
+  button, a, input[type="button"], input[type="submit"] {
+    min-height: 44px !important;
+    min-width: 44px !important;
+  }
+
+  /* Prevent text selection on buttons */
+  button, .btn {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Better spacing for touch */
+  nav li {
+    padding: 10px 0 !important;
+  }
+
+  /* Prevent double-tap zoom */
+  * {
+    touch-action: manipulation;
+  }
+}

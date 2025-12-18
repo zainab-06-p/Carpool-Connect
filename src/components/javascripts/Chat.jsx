@@ -5,7 +5,7 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 import { FaPaperPlane, FaSearch, FaUserFriends, FaUserCircle } from 'react-icons/fa'
 import { BsChatDotsFill } from 'react-icons/bs';
 
-const socket = io('https://carpool-backend-z6av.onrender.com');
+const socket = io('https://unsoporiferous-ruinously-gertie.ngrok-free.dev');
 
 function Chat({ socket, username, room }) {
   const [currentMessage, setCurrentMessage] = useState("");
@@ -21,7 +21,7 @@ function Chat({ socket, username, room }) {
         time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes(),
       };
 
-      await axios.post('https://carpool-backend-z6av.onrender.com/messages', messageData);
+      await axios.post('https://unsoporiferous-ruinously-gertie.ngrok-free.dev/messages', messageData);
 
       await new Promise((resolve) => {
         socket.emit("send_message", messageData, resolve);
@@ -36,7 +36,7 @@ function Chat({ socket, username, room }) {
   };
 
   useEffect(() => {
-    axios.get(`https://carpool-backend-z6av.onrender.com/messages/${room}`)
+    axios.get(`https://unsoporiferous-ruinously-gertie.ngrok-free.dev/messages/${room}`)
       .then((response) => {
         setMessageList(response.data);
       })

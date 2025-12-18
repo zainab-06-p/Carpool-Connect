@@ -5,7 +5,7 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 import { FaPaperPlane, FaSearch, FaUserFriends, FaUserCircle } from 'react-icons/fa'
 import { BsChatDotsFill } from 'react-icons/bs';
 
-const socket = io('http://localhost:4000');
+const socket = io('https://backend-rouge-iota.vercel.app');
 
 function Chat({ socket, username, room }) {
   const [currentMessage, setCurrentMessage] = useState("");
@@ -21,7 +21,7 @@ function Chat({ socket, username, room }) {
         time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes(),
       };
 
-      await axios.post('http://localhost:4000/messages', messageData);
+      await axios.post('https://backend-rouge-iota.vercel.app/messages', messageData);
 
       await new Promise((resolve) => {
         socket.emit("send_message", messageData, resolve);
@@ -36,7 +36,7 @@ function Chat({ socket, username, room }) {
   };
 
   useEffect(() => {
-    axios.get(`http://localhost:4000/messages/${room}`)
+    axios.get(`https://backend-rouge-iota.vercel.app/messages/${room}`)
       .then((response) => {
         setMessageList(response.data);
       })

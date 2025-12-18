@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: carpool-backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: PORT
+        value: 4000

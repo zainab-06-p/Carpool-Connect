@@ -38,10 +38,11 @@ function Chat({ socket, username, room }) {
   useEffect(() => {
     axios.get(`https://unsoporiferous-ruinously-gertie.ngrok-free.dev/messages/${room}`)
       .then((response) => {
-        setMessageList(response.data);
+        setMessageList(Array.isArray(response.data) ? response.data : []);
       })
       .catch((error) => {
         console.error('Error retrieving chat history:', error);
+        setMessageList([]);
       });
 
     socket.on("receive_message", receiveMessageHandler)
@@ -358,7 +359,7 @@ function Chat({ socket, username, room }) {
                   <p>Start the conversation by sending the first message!</p>
                 </div>
               ) : (
-                messageList.map((messageContent, index) => (
+                Array.isArray(messageList) && messageList.map((messageContent, index) => (
                   <div key={index} style={{
                     display: 'flex',
                     justifyContent: username === messageContent.author ? 'flex-end' : 'flex-start',

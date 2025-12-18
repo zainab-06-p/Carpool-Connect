@@ -1,2 +1,2 @@
-export const API_URL = 'https://backend-rouge-iota.vercel.app';
-export const SOCKET_URL = 'https://backend-rouge-iota.vercel.app';
+export const API_URL = 'https://carpool-backend-z6av.onrender.com';
+export const SOCKET_URL = 'https://carpool-backend-z6av.onrender.com';

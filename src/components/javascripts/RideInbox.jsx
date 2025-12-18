@@ -8,7 +8,7 @@ import Chat from './Chat';
 import Web3 from 'web3';
 import CommuteIOABI from '../ABI/contracttestingABI.json';
 
-const socket = io.connect("https://backend-rouge-iota.vercel.app");
+const socket = io.connect("https://carpool-backend-z6av.onrender.com");
 
 const contractAddress = '0x7B4c81ea9461f5A016359ACE651690768C87795E';
 

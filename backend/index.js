@@ -1,5 +1,6 @@
 const Message= require("./Schema/MessageModel")
 const db = require("./db")
+const mongoose = require('mongoose')
 
 const ConnectToMongo=require("./db")
 ConnectToMongo();
@@ -122,6 +123,18 @@ io.on("connection",(socket)=>{
 const PORT = process.env.PORT || 4000;
 server.listen(PORT, ()=>{
     console.log(`Server Running on port ${PORT}`)
+})
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('SIGTERM signal received: closing HTTP server')
+  server.close(() => {
+    console.log('HTTP server closed')
+    mongoose.connection.close(false, () => {
+      console.log('MongoDB connection closed')
+      process.exit(0)
+    })
+  })
 })
 
 module.exports = app;

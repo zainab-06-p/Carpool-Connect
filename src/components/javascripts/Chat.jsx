@@ -22,12 +22,13 @@ function Chat({ socket, username, room }) {
         time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes(),
       };
 
-      await axios.post(`${API_URL}/messages`, messageData);
+      // Add message to local state immediately for the sender
+      setMessageList((prevList) => [...prevList, messageData]);
+      setCurrentMessage("");
 
-      await new Promise((resolve) => {
-        socket.emit("send_message", messageData, resolve);
-        setCurrentMessage("");
-      })
+      // Send to backend and other users
+      await axios.post(`${API_URL}/messages`, messageData);
+      socket.emit("send_message", messageData);
     }
   }
 

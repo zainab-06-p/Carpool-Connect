@@ -110,18 +110,13 @@ io.on("connection",(socket)=>{
 
     
 
-    const receiveMessageHandler = async (data) => {
+    socket.on("send_message", async (data) => {
         const message= new Message(data);
         await message.save();
         
-        await new Promise((resolve)=>{
-          socket.to(data.room).emit("receive_message",data,resolve) ;
-        })
-             
-
-    };
-
-    socket.on("receive_message", receiveMessageHandler)
+        // Broadcast to ALL users in the room including sender
+        io.to(data.room).emit("receive_message", data);
+    });
     
 
 

@@ -1,2 +1,2 @@
-export const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000';
-export const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || 'http://localhost:4000';
+export const API_URL = process.env.REACT_APP_BACKEND_URL || 'https://unsoporiferous-ruinously-gertie.ngrok-free.dev';
+export const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || 'https://unsoporiferous-ruinously-gertie.ngrok-free.dev';

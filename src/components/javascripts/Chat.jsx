@@ -12,17 +12,6 @@ function Chat({ socket, username, room }) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const [usersInRoom, setUsersInRoom] = useState([username]);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
-  // Handle window resize for responsive design
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   const sendMessage = async () => {
     if (currentMessage !== "") {
@@ -33,12 +22,9 @@ function Chat({ socket, username, room }) {
         time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes(),
       };
 
-      // Add message to local state immediately for the sender
-      setMessageList((prevList) => [...prevList, messageData]);
       setCurrentMessage("");
-
-      // Send to backend and other users
-      await axios.post(`${API_URL}/messages`, messageData);
+      
+      // Send via socket - backend will save and broadcast to all users
       socket.emit("send_message", messageData);
     }
   }
@@ -91,7 +77,7 @@ function Chat({ socket, username, room }) {
     <div style={{
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      padding: isMobile ? '10px' : '20px'
+      padding: '20px'
     }}>
       <div style={{
         display: 'flex',
@@ -103,16 +89,14 @@ function Chat({ socket, username, room }) {
           background: 'rgba(255, 255, 255, 0.95)',
           backdropFilter: 'blur(10px)',
           borderRadius: '15px',
-          padding: isMobile ? '15px 20px' : '20px 40px',
-          marginBottom: isMobile ? '15px' : '30px',
+          padding: '20px 40px',
+          marginBottom: '30px',
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
         }}>
           <div style={{
             display: 'flex',
-            flexDirection: isMobile ? 'column' : 'row',
             justifyContent: 'space-between',
-            alignItems: isMobile ? 'flex-start' : 'center',
-            gap: isMobile ? '15px' : '0'
+            alignItems: 'center'
           }}>
             <h1 style={{
               margin: 0,
@@ -120,7 +104,7 @@ function Chat({ socket, username, room }) {
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
-              fontSize: isMobile ? '1.5rem' : '2.2rem',
+              fontSize: '2.2rem',
               fontWeight: '800'
             }}>
               CARPOOL CONNECT
@@ -150,10 +134,9 @@ function Chat({ socket, username, room }) {
 
         {/* Main Chat Container */}
         <div style={{
-          display: isMobile ? 'flex' : 'grid',
-          flexDirection: isMobile ? 'column' : undefined,
-          gridTemplateColumns: isMobile ? undefined : '1fr 2fr',
-          gap: isMobile ? '15px' : '30px',
+          display: 'grid',
+          gridTemplateColumns: '1fr 2fr',
+          gap: '30px',
           flex: 1
         }}>
           {/* Left Panel - Users List */}
@@ -161,12 +144,7 @@ function Chat({ socket, username, room }) {
             background: 'rgba(255, 255, 255, 0.95)',
             backdropFilter: 'blur(10px)',
             borderRadius: '20px',
-            padding: isMobile ? '20px' : '30px',
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-            display: 'flex',
-            flexDirection: 'column',
-            maxHeight: isMobile ? '200px' : undefined
-          }}>
+            padding: '30px',
             boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
             border: '1px solid rgba(255, 255, 255, 0.2)',
             display: 'flex',
@@ -444,10 +422,9 @@ function Chat({ socket, username, room }) {
             {/* Message Input */}
             <div style={{
               display: 'flex',
-              flexDirection: isMobile ? 'column' : 'row',
-              gap: isMobile ? '10px' : '15px',
+              gap: '15px',
               alignItems: 'center',
-              padding: isMobile ? '15px' : '20px',
+              padding: '20px',
               background: '#f7fafc',
               borderRadius: '15px',
               border: '2px solid #e2e8f0'
@@ -460,11 +437,10 @@ function Chat({ socket, username, room }) {
                 onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
                 style={{
                   flex: 1,
-                  width: isMobile ? '100%' : undefined,
-                  padding: isMobile ? '12px 16px' : '15px 20px',
+                  padding: '15px 20px',
                   border: '2px solid #e2e8f0',
                   borderRadius: '12px',
-                  fontSize: isMobile ? '16px' : '1rem',
+                  fontSize: '1rem',
                   background: 'white',
                   transition: 'all 0.3s ease',
                   outline: 'none'
@@ -487,10 +463,9 @@ function Chat({ socket, username, room }) {
                     : 'linear-gradient(45deg, #cccccc, #999999)',
                   color: 'white',
                   border: 'none',
-                  width: isMobile ? '100%' : 'auto',
-                  padding: isMobile ? '12px 20px' : '15px 25px',
+                  padding: '15px 25px',
                   borderRadius: '12px',
-                  fontSize: isMobile ? '0.95rem' : '1rem',
+                  fontSize: '1rem',
                   fontWeight: '600',
                   cursor: currentMessage.trim() ? 'pointer' : 'not-allowed',
                   transition: 'all 0.3s ease',

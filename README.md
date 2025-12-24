@@ -24,7 +24,7 @@ This project therefore aims to move ride-sharing and car hire are to blockchain 
 2. **Secure Transactions**: The platform uses blockchain technology to secure and track transactions between users, ensuring the safety and transparency of financial transactions.
 3. **Smart Contracts**: The platform can be powered by smart contracts, automatically executing the terms of a carpooling agreement without intermediaries.
 4. **Data Privacy**: User data is protected by the immutable and secure nature of blockchain technology, ensuring privacy and security.
-## 🔗Links
+
 
 
 
